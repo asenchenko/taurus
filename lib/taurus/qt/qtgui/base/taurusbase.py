@@ -736,7 +736,7 @@ class TaurusBaseComponent(TaurusListener, BaseConfigurableClass):
         if self._format is None:
             try:
                 self._updateFormat(type(v))
-            except Exception, e:
+            except Exception as e:
                 self.warning(('Cannot update format. Reverting to default.' +
                               ' Reason: %r'), e)
                 self.setFormat(defaultFormatter)

@@ -216,7 +216,7 @@ class Properties(object):
         self._props[key] = value.strip()
 
         # Check if an entry exists in pristine keys
-        if self._keymap.has_key(key):
+        if key in self._keymap:
             oldkey = self._keymap.get(key)
             self._origprops[oldkey] = oldvalue.strip()
         else:

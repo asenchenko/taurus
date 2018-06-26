@@ -44,9 +44,9 @@ from taurus.core.util.log import Logger
 from taurus.core.taurusbasetypes import TaurusElementType
 from taurus.core.taurusfactory import TaurusFactory
 
-from epicsattribute import EpicsAttribute
-from epicsdevice import EpicsDevice
-from epicsauthority import EpicsAuthority
+from .epicsattribute import EpicsAttribute
+from .epicsdevice import EpicsDevice
+from .epicsauthority import EpicsAuthority
 
 
 class EpicsFactory(Singleton, TaurusFactory, Logger):

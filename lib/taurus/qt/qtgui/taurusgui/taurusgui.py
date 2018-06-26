@@ -37,6 +37,7 @@ import weakref
 import inspect
 
 from lxml import etree
+from future.utils import itervalues
 
 import taurus
 from taurus import tauruscustomsettings
@@ -570,7 +571,7 @@ class TaurusGui(TaurusMainWindow):
         '''
         if name is None:
             items = sorted(
-                [n for n, p in self.__panels.iteritems() if p.isCustom()])
+                [n for n, p in iteritems(self.__panels) if p.isCustom()])
             name, ok = Qt.QInputDialog.getItem(self, "Remove Panel",
                                                "Panel to be removed (only custom panels can be removed).\n Important: you may want to save the perspective afterwards,\n and maybe remove the panel from other perspectives as well", items, 0, False)
             if not ok:
@@ -717,7 +718,7 @@ class TaurusGui(TaurusMainWindow):
 
         :return: (list<str>)
         '''
-        return [n for n, p in self.__panels.iteritems() if (p.isCustom() and p.isPermanent())]
+        return [n for n, p in iteritems(self.__panels) if (p.isCustom() and p.isPermanent())]
 
     def updatePermanentCustomPanels(self, showAlways=True):
         '''
@@ -1426,7 +1427,7 @@ class TaurusGui(TaurusMainWindow):
         else:
             self.__instrumentToPanelMap.update(copy.deepcopy(associationsdict))
         self.__panelToInstrumentMap = {}
-        for k, v in self.__instrumentToPanelMap.iteritems():
+        for k, v in iteritems(self.__instrumentToPanelMap):
             self.__panelToInstrumentMap[v] = k
 
     def _onPanelVisibilityChanged(self, visible):
@@ -1530,7 +1531,7 @@ class TaurusGui(TaurusMainWindow):
         dlg = QDoubleListDlg(winTitle='Export Panels to XML',
                              mainLabel='Select which of the custom panels you want to export as xml configuration',
                              label1='Not Exported', label2='Exported',
-                             list1=[n for n, p in self.__panels.iteritems() if p.isCustom()], list2=[])
+                             list1=[n for n, p in iteritems(self.__panels) if p.isCustom()], list2=[])
         result = dlg.exec_()
         if result != Qt.QDialog.Accepted:
             return

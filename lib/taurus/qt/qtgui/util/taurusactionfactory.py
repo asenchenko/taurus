@@ -33,7 +33,7 @@ from taurus.core.util.log import Logger
 from taurus.core.util.singleton import Singleton
 from taurus.external.qt import Qt
 
-import taurusaction
+from . import taurusaction
 
 
 class ActionFactory(Singleton, Logger):

@@ -82,7 +82,7 @@ def main():
             if cont:
                 continue
             for k in ('module', ):
-                if not qt_info.has_key(k):
+                if k not in qt_info:
                     #_log.debug("E4: Canceled %s (getQtDesignerPluginInfo doesn't have key %s)" % (name, k))
                     e4_nb += 1
                     cont = True

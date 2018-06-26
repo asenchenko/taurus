@@ -30,7 +30,10 @@ resfactory.py:
 import os
 import imp
 import operator
+import collections
 import types
+
+import six 
 
 from taurus.core.taurushelper import Manager
 from taurus.core.util.singleton import Singleton
@@ -84,13 +87,13 @@ class ResourcesFactory(Singleton, TaurusFactory, Logger):
         """
         if priority < 1:
             raise ValueError('priority must be >=1')
-        if operator.isMappingType(obj):
+        if isinstance(obj, collections.Mapping):
             name = name or 'DICT%02d' % priority
-        elif type(obj) in types.StringTypes or obj is None:
+        elif isinstance(obj, six.string_types) or obj is None:
             name, mod = self.__reloadResource(obj)
             obj = {}
             for k, v in mod.__dict__.items():
-                if not k.startswith('_') and isinstance(v, basestring):
+                if not k.startswith('_') and isinstance(v, six.string_types):
                     obj[k] = v
         else:
             raise TypeError
@@ -105,7 +108,7 @@ class ResourcesFactory(Singleton, TaurusFactory, Logger):
         if pl is None:
             self._resource_priority[priority] = pl = []
         pl.append(name)
-        self._resource_priority_keys = self._resource_priority.keys()
+        self._resource_priority_keys = list(self._resource_priority)
         self._resource_priority_keys.sort()
         return obj
 
@@ -136,7 +139,7 @@ class ResourcesFactory(Singleton, TaurusFactory, Logger):
             m = imp.load_module(module_name, file_, pathname, desc)
             if file_:
                 file_.close()
-        except Exception, e:
+        except Exception as e:
             if file_:
                 file_.close()
             raise e
@@ -246,15 +249,15 @@ class ResourcesFactory(Singleton, TaurusFactory, Logger):
 
     def getAuthorityNameValidator(self):
         """Return ResourceAuthorityNameValidator"""
-        import resvalidator
+        from . import resvalidator
         return resvalidator.ResourceAuthorityNameValidator()
 
     def getDeviceNameValidator(self):
         """Return ResourceDeviceNameValidator"""
-        import resvalidator
+        from . import resvalidator
         return resvalidator.ResourceDeviceNameValidator()
 
     def getAttributeNameValidator(self):
         """Return ResourceAttributeNameValidator"""
-        import resvalidator
+        from . import resvalidator
         return resvalidator.ResourceAttributeNameValidator()

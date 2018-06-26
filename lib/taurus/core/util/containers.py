@@ -27,6 +27,9 @@
 This module contains a set of useful containers that are not part of the standard
 python distribution.
 """
+from __future__ import print_function
+
+
 
 __all__ = ["CaselessList", "CaselessDict", "CaselessWeakValueDict", "LoopList",
            "CircBuf", "LIFO", "TimedQueue", "self_locked", "ThreadDict",
@@ -34,6 +37,8 @@ __all__ = ["CaselessList", "CaselessDict", "CaselessWeakValueDict", "LoopList",
            "DefaultThreadDict", "getDictAsTree", "ArrayBuffer", ]
 
 __docformat__ = "restructuredtext"
+
+from builtins import dict, range
 
 import copy
 import time
@@ -265,7 +270,7 @@ class CaselessDict(dict):
 
     def has_key(self, key):
         """overwritten from :meth:`dict.has_key`"""
-        return dict.has_key(self, key.lower())
+        return dict.__contains__(self, key.lower())
 
     def get(self, key, def_val=None):
         """overwritten from :meth:`dict.get`"""
@@ -318,7 +323,7 @@ class CaselessWeakValueDict(weakref.WeakValueDictionary):
 
     def has_key(self, key):
         """overwritten from :meth:`weakref.WeakValueDictionary.has_key`"""
-        return weakref.WeakValueDictionary.has_key(self, key.lower())
+        return weakref.WeakValueDictionary.__contains__(self, key.lower())
 
     def get(self, key, def_val=None):
         """overwritten from :meth:`weakref.WeakValueDictionary.get`"""
@@ -682,12 +687,12 @@ def self_locked(func, reentrant=True):
         self.lock.acquire()
         try:
             if self.trace:
-                print "locked: %s" % self.lock
+                print( "locked: %s" % self.lock )
             result = func(self, *args, **kwargs)
         finally:
             self.lock.release()
             if self.trace:
-                print "released: %s" % self.lock
+                print( "released: %s" % self.lock )
         return result
     return lock_fun
 
@@ -721,7 +726,7 @@ class ThreadDict(dict):
         self.parent = type(self).mro()[1]
 
     def tracer(self, text):
-        print text
+        print( text )
 
     def start(self):
         import threading
@@ -798,7 +803,7 @@ class ThreadDict(dict):
 
     @self_locked
     def append(self, key, value=None):
-        if not dict.has_key(self, key):
+        if not dict.__contains__(self, key):
             self.parent.__setitem__(self, key, value)
         if key not in self._threadkeys:
             self._threadkeys.append(key)
@@ -864,16 +869,16 @@ class ThreadDict(dict):
     #__repr__ = self_locked(dict.__repr__)
 
     #get = self_locked(dict.get)
-    has_key = self_locked(dict.has_key)
+    has_key = self_locked(dict.__contains__)
     update = self_locked(dict.update)
     copy = self_locked(dict.copy)
 
-    keys = self_locked(dict.keys)
-    values = self_locked(dict.values)
-    items = self_locked(dict.items)
-    iterkeys = self_locked(dict.iterkeys)
-    itervalues = self_locked(dict.itervalues)
-    iteritems = self_locked(dict.iteritems)
+    keys = self_locked(lambda d: list( d ))
+    values = self_locked(lambda d: list(d.values()))
+    items = self_locked(lambda d: list(d.items()))
+    iterkeys = self_locked(dict.keys)
+    itervalues = self_locked(dict.values)
+    iteritems = self_locked(dict.items)
 
 
 class SortedDict(dict):
@@ -1052,7 +1057,7 @@ def getDictAsTree(dct):
         lines = []
         if isinstance(d, dict):
             for k, v in d.items():
-                print 'with key "%s"' % k
+                print( 'with key "%s"' % k )
                 lines.append([''] * l + [str(k)])
                 lines += add_to_level(l + 1, v)
         elif type(d) in [list, set]:  # End of recursion
@@ -1065,7 +1070,7 @@ def getDictAsTree(dct):
             lines.append([''] * l + [str(d)])
         return lines
     ls = ['\t'.join(line) for line in add_to_level(0, dct)]
-    print 'lines are : \n', ls
+    print( 'lines are : \n', ls )
     return '\n'.join(ls)
 
 
@@ -1313,5 +1318,5 @@ class ArrayBuffer(object):
 
 def chunks(l, n):
     '''Generator which yields successive n-sized chunks from l'''
-    for i in xrange(0, len(l), n):
+    for i in range(0, len(l), n):
         yield l[i:i + n]

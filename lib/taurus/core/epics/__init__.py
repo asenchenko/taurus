@@ -67,4 +67,4 @@ are just convenience dummy objects in the epics scheme at this point.
 Epics records may eventually be mapped as Devices.
 """
 
-from epicsfactory import *
+from .epicsfactory import *

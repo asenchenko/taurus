@@ -29,6 +29,8 @@ curvesAppearanceChooserDlg.py:
     for a QwtPlot-derived widget (like Taurusplot)
 """
 
+from builtins import range
+
 from taurus.external.qt import Qt, Qwt5
 from datetime import datetime
 from taurus.qt.qtgui.util.ui import UILoadable
@@ -68,7 +70,7 @@ class CurveStatsDialog(Qt.QDialog):
 
         cbs = (self.ui.npointsStatCB, self.ui.minStatCB, self.ui.maxStatCB,
                self.ui.meanStatCB, self.ui.stdStatCB, self.ui.rmsStatCB)
-        self._checkboxToColMap = dict(zip(cbs, xrange(len(self.statColumns))))
+        self._checkboxToColMap = dict(zip(cbs, range(len(self.statColumns))))
 
         self.minPicker = Qwt5.QwtPlotPicker(Qwt5.QwtPlot.xBottom,
                                             Qwt5.QwtPlot.yLeft,
@@ -233,7 +235,7 @@ class CurveStatsDialog(Qt.QDialog):
         '''returns a list of row numbers corresponding to the selected rows of the table'''
         selected = []
         for rg in self.ui.statsTW.selectedRanges():
-            for row in xrange(rg.topRow(), rg.topRow() + rg.rowCount()):
+            for row in range(rg.topRow(), rg.topRow() + rg.rowCount()):
                 selected.append(row)
         return selected
 

@@ -39,6 +39,8 @@ except ImportError:
     debug(msg)
     raise
 
+from future.utils import iteritems
+
 from taurus.core.taurusbasetypes import (TaurusElementType,
                                          TaurusSerializationMode)
 from taurus.core.taurusfactory import TaurusFactory
@@ -222,7 +224,7 @@ class TangoFactory(Singleton, TaurusFactory, Logger):
 
            :param attr_name: (str) attribute name
         """
-        if self.tango_attr_klasses.has_key(attr_name):
+        if attr_name in self.tango_attr_klasses:
             del self.tango_attr_klasses[attr_name]
 
     def registerDeviceClass(self, dev_klass_name, dev_klass):
@@ -241,7 +243,7 @@ class TangoFactory(Singleton, TaurusFactory, Logger):
 
            :param dev_klass_name: (str) tango device class name
         """
-        if self.tango_dev_klasses.has_key(dev_klass_name):
+        if dev_klass_name in self.tango_dev_klasses:
             del self.tango_dev_klasses[dev_klass_name]
 
     def getDatabase(self, name=None):
@@ -401,7 +403,7 @@ class TangoFactory(Singleton, TaurusFactory, Logger):
                         attr_klass = self._getAttributeClass(
                             attr_name=attr_name)
                         kwargs['storeCallback'] = self._storeAttribute
-                        if not kwargs.has_key('pollingPeriod'):
+                        if 'pollingPeriod' not in  kwargs:
                             kwargs[
                                 'pollingPeriod'] = self.getDefaultPollingPeriod()
                         attr = attr_klass(full_attr_name, dev, **kwargs)
@@ -517,10 +519,10 @@ class TangoFactory(Singleton, TaurusFactory, Logger):
             raise KeyError("Device %s not found" % dev_or_dev_name)
         dev.cleanUp()
         full_name = dev.getFullName()
-        if self.tango_devs.has_key(full_name):
+        if full_name in self.tango_devs:
             del self.tango_devs[full_name]
         simp_name = dev.getSimpleName()
-        if self.tango_alias_devs.has_key(simp_name):
+        if simp_name in self.tango_alias_devs:
             del self.tango_alias_devs[simp_name]
 
     def removeExistingAttribute(self, attr_or_attr_name):
@@ -551,14 +553,14 @@ class TangoFactory(Singleton, TaurusFactory, Logger):
         if not self.isPollingEnabled():
             return
         self._polling_enabled = False
-        for period, timer in self.polling_timers.iteritems():
+        for period, timer in iteritems(self.polling_timers):
             timer.stop()
 
     def enablePolling(self):
         """Enable the application tango polling"""
         if self.isPollingEnabled():
             return
-        for period, timer in self.polling_timers.iteritems():
+        for period, timer in iteritems(self.polling_timers):
             timer.start()
         self._polling_enabled = True
 
@@ -570,17 +572,17 @@ class TangoFactory(Singleton, TaurusFactory, Logger):
 
     def getAuthorityNameValidator(self):
         """Return TangoAuthorityNameValidator"""
-        import tangovalidator
+        from . import tangovalidator
         return tangovalidator.TangoAuthorityNameValidator()
 
     def getDeviceNameValidator(self):
         """Return TangoDeviceNameValidator"""
-        import tangovalidator
+        from . import tangovalidator
         return tangovalidator.TangoDeviceNameValidator()
 
     def getAttributeNameValidator(self):
         """Return TangoAttributeNameValidator"""
-        import tangovalidator
+        from . import tangovalidator
         return tangovalidator.TangoAttributeNameValidator()
 
     def setOperationMode(self, mode):

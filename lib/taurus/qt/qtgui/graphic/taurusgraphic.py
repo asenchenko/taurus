@@ -62,6 +62,8 @@ import traceback
 import operator
 import types
 
+from builtins import range
+
 import Queue
 
 from taurus import Manager
@@ -983,7 +985,7 @@ class QSpline(Qt.QGraphicsPathItem):
             path.lineTo(cp[1])
         else:
             path.moveTo(cp[0])
-            for i in xrange(1, nb_points - 1, 3):
+            for i in range(1, nb_points - 1, 3):
                 p1 = cp[i + 0]
                 p2 = cp[i + 1]
                 end = cp[i + 2]

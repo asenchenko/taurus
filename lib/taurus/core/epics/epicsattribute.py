@@ -25,6 +25,9 @@
 '''
 Epics module. See __init__.py for more detailed documentation
 '''
+
+from __future__ import print_function
+
 __all__ = ['EpicsAttribute']
 
 
@@ -251,6 +254,6 @@ if __name__ == '__main__':
     b.write(4.)
     s.read()
 
-    print "!$!", s.read(cache=False)
-    print "a,b,s", a.read().rvalue, b.read().rvalue, s.read().rvalue
-    print "DF=", a.getDataFormat(), DataFormat.whatis(a.getDataFormat())
+    print("!$!", s.read(cache=False))
+    print("a,b,s", a.read().rvalue, b.read().rvalue, s.read().rvalue)
+    print("DF=", a.getDataFormat(), DataFormat.whatis(a.getDataFormat()))

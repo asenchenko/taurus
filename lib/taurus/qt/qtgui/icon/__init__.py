@@ -28,5 +28,5 @@ Utilities for using the bundled icons in Taurus and for registering external
 sources of icons.
 """
 
-from icon import *
-from catalog import QIconCatalog
+from .icon import *
+from .catalog import QIconCatalog

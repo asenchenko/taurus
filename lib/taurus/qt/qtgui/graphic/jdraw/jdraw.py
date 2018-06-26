@@ -32,6 +32,8 @@ __docformat__ = 'restructuredtext'
 import os
 import traceback
 
+from builtins import range
+
 from taurus.external.qt import Qt
 from taurus.core.util.log import Logger
 from taurus.core.util.singleton import Singleton
@@ -180,7 +182,7 @@ class TaurusJDrawGraphicsFactory(Singleton, TaurusBaseGraphicsFactory, Logger):
 
         polygon = Qt.QPolygonF()
         p = params.get('summit')
-        for i in xrange(0, len(p), 2):
+        for i in range(0, len(p), 2):
             polygon.append(Qt.QPointF(p[i], p[i + 1]))
         item.setPolygon(polygon)
 
@@ -189,7 +191,7 @@ class TaurusJDrawGraphicsFactory(Singleton, TaurusBaseGraphicsFactory, Logger):
     def getSplineObj(self, params):
         item = self.getGraphicsItem('Spline', params)
         p = params.get('summit')
-        p = [Qt.QPointF(p[i], p[i + 1]) for i in xrange(0, len(p), 2)]
+        p = [Qt.QPointF(p[i], p[i + 1]) for i in range(0, len(p), 2)]
         item.setControlPoints(p)
         isClosed = params.get('isClosed', True)
         item.setClose(isClosed)
@@ -371,9 +373,9 @@ class TaurusJDrawGraphicsFactory(Singleton, TaurusBaseGraphicsFactory, Logger):
                 pen.setWidth(lineWidth)
                 pen.setStyle(LINESTYLE_JDW2QT[params.get("lineStyle", 0)])
             item.setPen(pen)
-        except AttributeError, ae:
+        except AttributeError as ae:
             pass
-        except Exception, e:
+        except Exception as e:
             self.warning('jdraw.set_common_params(%s(%s)).(foreground,width,style) failed!: \n\t%s' % (
                 type(item).__name__, name, traceback.format_exc()))
 

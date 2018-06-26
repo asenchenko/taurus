@@ -104,9 +104,9 @@ def accepts(*types, **kw):
             newf.__name__ = f.__name__
             return newf
         return decorator
-    except KeyError, key:
+    except KeyError as key:
         raise KeyError, key + "is not a valid keyword argument"
-    except TypeError, msg:
+    except TypeError as msg:
         raise TypeError, msg
 
 
@@ -145,9 +145,9 @@ def returns(ret_type, **kw):
             newf.__name__ = f.__name__
             return newf
         return decorator
-    except KeyError, key:
+    except KeyError as key:
         raise KeyError, key + "is not a valid keyword argument"
-    except TypeError, msg:
+    except TypeError as msg:
         raise TypeError, msg
 
 

@@ -100,4 +100,4 @@ is not even defined).
 
 """
 
-from resfactory import *
+from .resfactory import *

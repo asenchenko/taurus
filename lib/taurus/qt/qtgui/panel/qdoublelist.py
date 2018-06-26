@@ -33,6 +33,8 @@ __all__ = ["QDoubleListDlg"]
 
 __docformat__ = 'restructuredtext'
 
+from builtins import range
+
 from taurus.external.qt import Qt
 from taurus.qt.qtgui.util.ui import UILoadable
 
@@ -101,14 +103,14 @@ class QDoubleListDlg(Qt.QDialog):
 
         :return: (list<str>)
         '''
-        return [unicode(self.ui.list1.item(row).text()) for row in xrange(self.ui.list1.count())]
+        return [unicode(self.ui.list1.item(row).text()) for row in range(self.ui.list1.count())]
 
     def getAll2(self):
         '''returns a copy the items in the second list
 
         :return: (list<str>)
         '''
-        return [unicode(self.ui.list2.item(row).text()) for row in xrange(self.ui.list2.count())]
+        return [unicode(self.ui.list2.item(row).text()) for row in range(self.ui.list2.count())]
 
     # note, for the moment we do not make it available in designer because it does not
     # behave well as a widget (only as a dialog) (e.g., it closes if ESC is pressed

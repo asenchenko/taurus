@@ -25,12 +25,18 @@
 
 """This module contains the taurus base manager class"""
 
+from __future__ import print_function
+
 __all__ = ["TaurusManager"]
 
 __docformat__ = "restructuredtext"
 
 import os
 import atexit
+
+
+from builtins import range
+
 
 from .util.singleton import Singleton
 from .util.log import Logger, taurus4_deprecation
@@ -44,6 +50,7 @@ from .taurusexception import TaurusException
 from .taurusfactory import TaurusFactory
 from .taurushelper import getSchemeFromName
 from taurus import tauruscustomsettings
+
 
 
 class TaurusManager(Singleton, Logger):
@@ -291,7 +298,7 @@ class TaurusManager(Singleton, Logger):
         for plugin_class in plugin_classes:
             schemes = list(plugin_class.schemes)
             for scheme in schemes:
-                if plugins.has_key(scheme):
+                if scheme in plugins:
                     k = plugins[scheme]
                     self.warning("Conflicting plugins: %s and %s both implement "
                                  "scheme %s. Will keep using %s" % (k.__name__,
@@ -336,7 +343,7 @@ class TaurusManager(Singleton, Logger):
         for full_module_name in full_module_names:
             try:
                 m = __import__(full_module_name, fromlist=['*'], level=0)
-            except Exception, imp1:
+            except Exception as imp1:
                 # just in case we are in python 2.4
                 try:
                     m = __import__(full_module_name,
@@ -368,7 +375,7 @@ class TaurusManager(Singleton, Logger):
 
     def _find_scheme(self, factory_class):
         class_name = factory_class.__name__
-        for i in xrange(1, len(class_name)):
+        for i in range(1, len(class_name)):
             if class_name[i].isupper():
                 return class_name[:i].lower()
 
@@ -397,4 +404,4 @@ class TaurusManager(Singleton, Logger):
 
 if __name__ == '__main__':
     manager = TaurusManager()
-    print manager.getPlugins()
+    print(manager.getPlugins())

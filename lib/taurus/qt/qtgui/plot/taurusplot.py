@@ -34,6 +34,10 @@ import copy
 from datetime import datetime
 import time
 import numpy
+
+from builtins import range
+from future.utils import iteritems
+
 from taurus.external.qt import Qt, Qwt5
 
 import taurus
@@ -910,8 +914,8 @@ class TaurusCurve(Qwt5.QwtPlotCurve, TaurusBaseComponent):
         if imax is None:
             imax = data.size()
 
-        x = numpy.array([data.x(i) for i in xrange(imin, imax)])
-        y = numpy.array([data.y(i) for i in xrange(imin, imax)])
+        x = numpy.array([data.x(i) for i in range(imin, imax)])
+        y = numpy.array([data.y(i) for i in range(imin, imax)])
 
         if limits is not None:
             xmin, xmax = limits
@@ -1747,7 +1751,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
         try:
             # get the key in the self.curves directory
             curveName = None
-            for curveName, c in self.curves.iteritems():
+            for curveName, c in iteritems(self.curves):
                 if c is curve:
                     break
             axis = curve.yAxis()
@@ -1812,11 +1816,11 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
             properties = CurveAppearanceProperties(
                 lColor=self._curvePens.next().color(), lWidth=2)
         # Deprecation Warning:
-        if rawdata.has_key("pen") or rawdata.has_key("style"):
+        if "pen" in rawdata or "style" in rawdata:
             raise DeprecationWarning(
                 "'pen' or 'style' are no longer supported. Use the properties parameter instead")
-        if rawdata.has_key("name"):
-            if rawdata.has_key("title"):
+        if "name" in rawdata:
+            if "title" in rawdata:
                 self.error(
                     'Inconsistence: both "name" and "title" passed for rawdata. Use "title" only')
             else:
@@ -1866,7 +1870,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
             name = id
         self.curves_lock.acquire()
         try:
-            if self.curves.has_key(name):
+            if name in self.curves:
                 curve = self.curves.get(name)
                 if curve.isRawData:
                     self.detachRawData(name)
@@ -1947,10 +1951,10 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
         """
         self.curves_lock.acquire()
         try:
-            if self.curves.has_key(curvename):
+            if curvename in self.curves:
                 data = self.curves[curvename].data()
-                x = [data.x(i) for i in xrange(data.size())]
-                y = [data.y(i) for i in xrange(data.size())]
+                x = [data.x(i) for i in range(data.size())]
+                y = [data.y(i) for i in range(data.size())]
             else:
                 self.error("Curve '%s' not found" % curvename)
                 raise KeyError()
@@ -1997,7 +2001,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
                 xname = xnames[i]
                 name = str(name)
                 self.debug('updating curve %s' % name)
-                if not self.curves.has_key(name):
+                if name not in self.curves:
                     curve = TaurusCurve(name, xname, self,
                                         optimized=self.isOptimizationEnabled())
                     curve.attach(self)
@@ -2258,7 +2262,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
         self.curves_lock.acquire()
         try:
             propdict = {}
-            for name, curve in self.curves.iteritems():
+            for name, curve in iteritems(self.curves):
                 propdict[name] = copy.deepcopy(curve.getAppearanceProperties())
         finally:
             self.curves_lock.release()
@@ -2276,7 +2280,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
         """
         self.curves_lock.acquire()
         try:
-            for name, prop in propDict.iteritems():
+            for name, prop in iteritems(propDict):
                 c = self.curves[name]
                 c.setAppearanceProperties(copy.deepcopy(prop))
                 visible = getattr(prop, 'visible', True)
@@ -2799,7 +2803,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
             else:
                 rawdata["x"] = M[:, xcol]
 
-            for col in xrange(M.shape[1]):
+            for col in range(M.shape[1]):
                 if col == xcol:
                     continue  # ignore the xcol (it has already been set)
                 rawdata["y"] = M[:, col]
@@ -2991,7 +2995,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
                 if not curve.isVisible():
                     continue
                 data = curve.data()
-                for i in xrange(data.size()):
+                for i in range(data.size()):
                     point = Qt.QPoint(self.transform(curve.xAxis(), data.x(
                         i)), self.transform(curve.yAxis(), data.y(i)))
                     if scopeRect.contains(point):
@@ -3457,7 +3461,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
         try:
             if curveNamesList is None:
                 curveNamesList = [
-                    n for n, c in self.curves.iteritems() if not c.isRawData]
+                    n for n, c in iteritems(self.curves) if not c.isRawData]
             newTitlesDict = CaselessDict()
             for curveName in curveNamesList:
                 curve = self.curves.get(curveName)

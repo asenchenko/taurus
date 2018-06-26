@@ -31,6 +31,8 @@ curvesAppearanceChooserDlg.py:
 
 import copy
 
+from future.utils import iteritems
+
 from taurus.external.qt import Qt, Qwt5
 from taurus.core.util.containers import CaselessDict
 from taurus.qt.qtgui.util.ui import UILoadable
@@ -45,7 +47,7 @@ NamedLineStyles = {None: "",
                    Qt.Qt.DashDotDotLine: ".._..",
                    }
 ReverseNamedLineStyles = {}
-for k, v in NamedLineStyles.iteritems():
+for k, v in iteritems(NamedLineStyles):
     ReverseNamedLineStyles[v] = k
 
 NamedCurveStyles = {None: "",
@@ -56,7 +58,7 @@ NamedCurveStyles = {None: "",
                     Qwt5.QwtPlotCurve.Dots: "Dots"
                     }
 ReverseNamedCurveStyles = {}
-for k, v in NamedCurveStyles.iteritems():
+for k, v in iteritems(NamedCurveStyles):
     ReverseNamedCurveStyles[v] = k
 
 NamedSymbolStyles = {
@@ -80,7 +82,7 @@ NamedSymbolStyles = {
 }
 
 ReverseNamedSymbolStyles = {}
-for k, v in NamedSymbolStyles.iteritems():
+for k, v in iteritems(NamedSymbolStyles):
     ReverseNamedSymbolStyles[v] = k
 
 NamedColors = ["Black", "Red", "Blue", "Magenta",
@@ -163,7 +165,7 @@ class CurvesAppearanceChooser(Qt.QWidget):
         self._curvePropDictOrig = copy.deepcopy(curvePropDict)
         self.curvesLW.clear()
         self.__itemsDict = CaselessDict()
-        for name, prop in self.curvePropDict.iteritems():
+        for name, prop in iteritems(self.curvePropDict):
             # create and insert the item
             item = Qt.QListWidgetItem(Qt.QString(prop.title), self.curvesLW)
             self.__itemsDict[name] = item
@@ -191,7 +193,7 @@ class CurvesAppearanceChooser(Qt.QWidget):
         '''
         if newTitlesDict is None:
             return
-        for name, title in newTitlesDict.iteritems():
+        for name, title in iteritems(newTitlesDict):
             self.curvePropDict[name].title = title
             self.__itemsDict[name].setText(title)
 

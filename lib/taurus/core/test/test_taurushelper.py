@@ -30,6 +30,8 @@
 __docformat__ = 'restructuredtext'
 
 import numpy
+from future.utils import iteritems
+
 import functools
 import unittest
 from taurus.core.units import Quantity
@@ -441,7 +443,7 @@ class AttributeTestCase(unittest.TestCase):
         msg = ('read() for "%s" did not return a TaurusAttrValue (got a %s)' %
                (name, readvalue.__class__.__name__))
         self.assertTrue(isinstance(readvalue, TaurusAttrValue), msg)
-        for k, exp in expected.iteritems():
+        for k, exp in iteritems(expected):
             try:
                 got = getattr(readvalue, k)
             except AttributeError:

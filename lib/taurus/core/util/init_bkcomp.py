@@ -61,7 +61,7 @@ from .prop import *
 from .threadpool import *
 from .user import *
 
-import eventfilters
+from . import eventfilters
 
 try:
     from lxml import etree

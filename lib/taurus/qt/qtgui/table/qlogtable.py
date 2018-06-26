@@ -37,6 +37,8 @@ import datetime
 import threading
 import socket
 
+from builtins import range
+
 import taurus
 from taurus.core.util.log import Logger
 from taurus.core.util.remotelogmonitor import LogRecordStreamHandler, \
@@ -345,7 +347,7 @@ class QLoggingTable(Qt.QTableView):
         """Overwrite of slot rows inserted to do proper resize and scroll to
         bottom if desired"""
         Qt.QTableView.rowsInserted(self, index, start, end)
-        for i in xrange(start, end + 1):
+        for i in range(start, end + 1):
             self.resizeRowToContents(i)
         if start == 0:
             self.resizeColumnsToContents()
@@ -562,7 +564,7 @@ def fill_log():
     import time
     import random
 
-    for i in xrange(10):
+    for i in range(10):
         taurus.info("Hello world %04d" % i)
 
     loggers = ["Object%02d" % (i + 1) for i in range(10)]

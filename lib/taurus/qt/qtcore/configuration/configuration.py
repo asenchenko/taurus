@@ -26,10 +26,13 @@
 """This module provides the set of base classes designed to provide
 configuration features to the classes that inherit from them"""
 
+from __future__ import print_function
+
 __all__ = ["configurableProperty", "BaseConfigurableClass"]
 
 __docformat__ = 'restructuredtext'
 
+from future.utils import iteritems
 
 class configurableProperty:
     '''A dummy class used to handle properties with the configuration API
@@ -149,7 +152,7 @@ class BaseConfigurableClass:
 
         for k in x['__orderedConfigNames__']:
             if k not in x['__itemConfigurations__']:
-                print 'missing configuration for "%s" in %s' % (k, repr(x))
+                print('missing configuration for "%s" in %s' % (k, repr(x)))
         return True
 
     def createConfig(self, allowUnpickable=False):
@@ -190,7 +193,7 @@ class BaseConfigurableClass:
         # store the configurations for all registered configurable items as
         # well
         itemcfgs = {}
-        for k, v in self.__configurableItems.iteritems():
+        for k, v in iteritems(self.__configurableItems):
             itemcfgs[k] = v.createConfig(allowUnpickable=allowUnpickable)
         configdict["__itemConfigurations__"] = itemcfgs
         configdict["__orderedConfigNames__"] = self.__configurableItemNames
@@ -250,7 +253,7 @@ class BaseConfigurableClass:
         self.__configurableItems = {}
 
     def registerConfigurableItem(self, item, name=None):
-        print "Deprecation WARNING: %s.registerConfigurableItem() has been deprecated. Use registerConfigDelegate() instead" % repr(self)
+        print("Deprecation WARNING: %s.registerConfigurableItem() has been deprecated. Use registerConfigDelegate() instead" % repr(self))
         self._registerConfigurableItem(item, name=name)
 
     def registerConfigDelegate(self, delegate, name=None):

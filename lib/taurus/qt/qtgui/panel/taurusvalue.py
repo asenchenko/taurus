@@ -1145,7 +1145,7 @@ class TaurusValue(Qt.QWidget, TaurusBaseWidget):
                 widget_configdict = configdict[key]
                 getattr(self, 'set%sClass' % key)(
                     widget_configdict.get('classid', None))
-                if widget_configdict.has_key('delegate'):
+                if 'delegate' in widget_configdict:
                     widget = getattr(self, key[0].lower() + key[1:])()
                     if isinstance(widget, BaseConfigurableClass):
                         widget.applyConfig(widget_configdict[

@@ -37,6 +37,8 @@ __docformat__ = "restructuredtext"
 
 import datetime
 
+from past.builtins import long
+
 from .util.enumeration import Enumeration
 from .util.log import taurus4_deprecation
 from enum import IntEnum

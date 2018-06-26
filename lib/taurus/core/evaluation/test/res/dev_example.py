@@ -26,6 +26,8 @@
 Examples on using the evaluation scheme for exposing arbitrary non-tango quantities as taurus attributes
 '''
 
+from __future__ import print_function
+
 __all__ = ['FreeSpaceDevice']
 
 import os
@@ -70,7 +72,7 @@ def test1():
     # calculates free space in Gb
     a = taurus.Attribute(
         'eval:@taurus.core.evaluation.test.res.dev_example.FreeSpaceDevice/getFreeSpace("/").to("GiB")')
-    print "Free space: {:s}".format(a.read().rvalue), a.read().rvalue.units
+    print("Free space: {:s}".format(a.read().rvalue), a.read().rvalue.units)
 
 
 def test2():

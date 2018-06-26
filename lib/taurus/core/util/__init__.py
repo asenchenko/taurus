@@ -42,6 +42,6 @@ LIGHTWEIGHT_IMPORTS = getattr(
     taurus.tauruscustomsettings, 'LIGHTWEIGHT_IMPORTS', False)
 
 if LIGHTWEIGHT_IMPORTS:
-    from init_lightweight import *
+    from .init_lightweight import *
 else:
-    from init_bkcomp import *
+    from .init_bkcomp import *

@@ -31,6 +31,8 @@ __all__ = ['Q7SegDigit']
 
 __docformat__ = 'restructuredtext'
 
+from builtins import range
+
 from taurus.external.qt import Qt
 
 POLY = Qt.QPolygonF
@@ -247,7 +249,7 @@ class Q7SegDigit(Qt.QWidget):
 
         pens, brushes = self._pens[idx], self._brushes[idx]
 
-        for i in xrange(7):
+        for i in range(7):
             seg = Qt.QPainterPath()
             seg.addPolygon(geom[i])
             painter.setPen(pens[i])
@@ -505,7 +507,7 @@ class Q7SegDisplay(Qt.QWidget):
         self.setLayout(l)
 
         self._digits = []
-        for i in xrange(5):
+        for i in range(5):
             d = Q7SegDigit()
             d.setUseFrame(False)
             d.setValue(i)

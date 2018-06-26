@@ -30,7 +30,10 @@ __docformat__ = 'restructuredtext'
 
 import os
 import sys
+
+from future.utils import itervalues
 from lxml import etree
+
 from taurus.qt.qtgui.util import ExternalAppAction
 from taurus.qt.qtgui.util import TaurusWidgetFactory
 from taurus.core.util.log import Logger
@@ -223,9 +226,9 @@ class TaurusGuiComponentDescription(object):
             w.setModel(self.model)
         # connect (if an sdm is given)
         if sdm is not None:
-            for dataUID, signalname in self.sharedDataWrite.iteritems():
+            for dataUID, signalname in iteritems(self.sharedDataWrite):
                 sdm.connectWriter(dataUID, w, signalname)
-            for dataUID, slotname in self.sharedDataRead.iteritems():
+            for dataUID, slotname in iteritems(self.sharedDataRead):
                 sdm.connectReader(dataUID, getattr(w, slotname))
         # set the name
         w.name = self.name
@@ -250,12 +253,12 @@ class TaurusGuiComponentDescription(object):
         floating.text = str(self._floating)
 
         sharedDataWrite = etree.SubElement(root, "sharedDataWrite")
-        for k, v in self._sharedDataWrite.iteritems():
+        for k, v in iteritems(self._sharedDataWrite):
             item = etree.SubElement(
                 sharedDataWrite, "item", datauid=k, signalName=v)
 
         sharedDataRead = etree.SubElement(root, "sharedDataRead")
-        for k, v in self._sharedDataRead.iteritems():
+        for k, v in iteritems(self._sharedDataRead):
             item = etree.SubElement(
                 sharedDataRead, "item", datauid=k, slotName=v)
 
@@ -387,7 +390,7 @@ class PanelDescription(TaurusGuiComponentDescription):
             # if model is a sequence, convert to space-separated string
             try:
                 model = " ".join(model)
-            except Exception, e:
+            except Exception as e:
                 msg = ('Cannot convert %s to a space-separated string: %s' %
                        (model, e))
                 Logger().debug(msg)

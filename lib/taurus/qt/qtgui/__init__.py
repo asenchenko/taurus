@@ -32,7 +32,7 @@ __docformat__ = 'restructuredtext'
 
 
 # register icon path files and icon theme on import of taurus.qt.qtgui
-import icon as __icon
+from . import icon as __icon
 import os
 import sys
 import glob

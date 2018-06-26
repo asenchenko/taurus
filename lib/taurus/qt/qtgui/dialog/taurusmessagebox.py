@@ -46,7 +46,7 @@ class TaurusMessageBox(Qt.QDialog):
         dev = taurus.Device("sys/tg_test/1")
         try:
             print dev.read_attribute("throw_exception")
-        except PyTango.DevFailed, df:
+        except PyTango.DevFailed as df:
             msgbox = TaurusMessageBox()
             msgbox.show()
 
@@ -58,7 +58,7 @@ class TaurusMessageBox(Qt.QDialog):
         exc_info = None
         try:
             print dev.read_attribute("throw_exception")
-        except PyTango.DevFailed, df:
+        except PyTango.DevFailed as df:
             exc_info = sys.exc_info()
 
         if exc_info:
@@ -135,7 +135,7 @@ class TaurusMessageBox(Qt.QDialog):
             msgbox = TaurusMessageBox()
             try:
                 print dev.read_attribute("throw_exception")
-            except PyTango.DevFailed, df:
+            except PyTango.DevFailed as df:
                 exc_info = sys.exc_info()
 
             if exc_info:
@@ -334,7 +334,7 @@ def py_tg_serv_exc():
     try:
         PyTango.Except.throw_exception('TangoException',
                                        'A simple tango exception', 'right here')
-    except PyTango.DevFailed, df1:
+    except PyTango.DevFailed as df1:
         try:
             import traceback
             import StringIO

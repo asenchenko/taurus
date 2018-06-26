@@ -23,4 +23,4 @@
 ##
 #############################################################################
 
-from tgtestds import TangoSchemeTestLauncher
+from .tgtestds import TangoSchemeTestLauncher

@@ -215,7 +215,7 @@ def print_color_palette(pal):
         bg_color = pal.name(stoq)
         rgb = "(%3.3d, %3.3d, %3.3d)" % pal.rgb(stoq)
         hx = pal.hex(stoq)
-        print "%7s %5s on %13s %15s #%s" % (stoq, fg_color, bg_color, rgb, hx)
+        print("%7s %5s on %13s %15s #%s" % (stoq, fg_color, bg_color, rgb, hx))
 
 
 if __name__ == "__main__":
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     from taurus.core import TaurusDevState
     import PyTango
     print
-    print DEVICE_STATE_PALETTE.rgb(TaurusDevState.Ready)
-    print DEVICE_STATE_PALETTE.rgb('TaurusDevState.Ready')
-    print DEVICE_STATE_PALETTE.rgb(PyTango.DevState.ON)
-    print DEVICE_STATE_PALETTE.rgb(0)
+    print(DEVICE_STATE_PALETTE.rgb(TaurusDevState.Ready))
+    print(DEVICE_STATE_PALETTE.rgb('TaurusDevState.Ready'))
+    print(DEVICE_STATE_PALETTE.rgb(PyTango.DevState.ON))
+    print(DEVICE_STATE_PALETTE.rgb(0))

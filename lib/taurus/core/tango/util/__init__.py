@@ -27,4 +27,4 @@
 
 __docformat__ = 'restructuredtext'
 
-from formatter import tangoFormatter
+from .formatter import tangoFormatter

@@ -27,11 +27,16 @@
 event.py:
 """
 
+from __future__ import print_function
+
+
 __all__ = ["BoundMethodWeakref", "CallableRef", "EventGenerator",
            "ConfigEventGenerator", "ListEventGenerator", "EventListener",
            "AttributeEventWait", "AttributeEventIterator"]
 
 __docformat__ = "restructuredtext"
+
+from builtins import range
 
 import sys
 import weakref
@@ -157,7 +162,7 @@ class EventStack(object):
         return read
 
 
-from object import Object
+from .object import Object
 
 
 class EventGenerator(Object):
@@ -208,7 +213,7 @@ class EventGenerator(Object):
         :type data: boolean
         """
         if not self.events_active:
-            raise RuntimeError, ('%s does not have '
+            raise RuntimeError('%s does not have '
                                  'events/polling active' % self.event_name)
 
         cb_ref = CallableRef(cb, self.unsubscribeDeletedEvent)
@@ -216,8 +221,8 @@ class EventGenerator(Object):
         try:
             self.lock()
             if (cb_ref, data) in self.cb_list:
-                raise RuntimeError, ('Callback %s(%s) already reg. on %s' %
-                                     (cb, data, self.event_name))
+                raise RuntimeError('Callback %s(%s) already reg. on %s' %
+                                        (cb, data, self.event_name))
             self.cb_list.append((cb_ref, data))
             if with_first_event:
                 cb(data, self.first_event_val)
@@ -229,7 +234,7 @@ class EventGenerator(Object):
         try:
             self.lock()
             aux_list = list(self.cb_list)
-            for i in xrange(len(aux_list) - 1, -1, -1):
+            for i in range(len(aux_list) - 1, -1, -1):
                 pair = self.cb_list[i]
                 if pair[0] is cb_ref:
                     del self.cb_list[i]
@@ -320,7 +325,7 @@ class EventGenerator(Object):
         :return: the value of the event that unblocked the wait
         :rtype: object"""
         if not self.events_active:
-            raise RuntimeError, ('%s does not have '
+            raise RuntimeError ('%s does not have '
                                  'events/polling active' % self.event_name)
         try:
             self.lock()
@@ -545,8 +550,8 @@ class AttributeEventWait(object):
                 name = th.name
             else:
                 name = "<unknown>"
-            print "WARNING: Thread %s trying to unlock condition previously " \
-                  "locked by thread %s" % (curr_th.name, name)
+            print("WARNING: Thread %s trying to unlock condition previously " \
+                  "locked by thread %s" % (curr_th.name, name) )
 
     def clearEventSet(self):
         "Clears the internal event buffer"
@@ -658,7 +663,7 @@ class AttributeEventWait(object):
                             return
                 self._cond.wait(timeout)
                 retries -= 1
-        except Exception, e:
+        except Exception as e:
             sys.stderr.write(
                 "AttributeEventWait: Caught exception while waitting: %s\n" % str(e))
             raise e
@@ -699,8 +704,8 @@ class AttributeEventIterator(object):
             lock = getattr(self._cond, "_Condition__lock")
             th = getattr(lock, "_RLock__owner")
             curr_th = threading.current_thread()
-            print "WARNING: Thread %s trying to unlock condition previously " \
-                  "locked by thread %s" % (curr_th.name, th.name)
+            print("WARNING: Thread %s trying to unlock condition previously " \
+                  "locked by thread %s" % (curr_th.name, th.name))
 
     def eventReceived(self, s, t, v):
         if t not in (taurus.core.taurusbasetypes.TaurusEventType.Change, taurus.core.taurusbasetypes.TaurusEventType.Periodic):
@@ -722,7 +727,7 @@ class AttributeEventIterator(object):
             while True:
                 self._cond.wait(timeout)
                 yield self._data
-        except Exception, e:
-            print "INFO: Caught exception while waiting", str(e)
+        except Exception as e:
+            print("INFO: Caught exception while waiting", str(e))
         finally:
             self.unlock()

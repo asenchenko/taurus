@@ -28,7 +28,7 @@ images (CCDs, detectors, etc)"""
 
 __docformat__ = 'restructuredtext'
 
-from img import *
+from .img import *
 
 
 def registerExtensions():

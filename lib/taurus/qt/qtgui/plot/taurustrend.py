@@ -34,6 +34,10 @@ import numpy
 import re
 import gc
 import weakref
+
+from builtins import range
+from future.utils import iteritems
+
 from taurus.external.qt import Qt, Qwt5
 
 import taurus.core
@@ -183,7 +187,7 @@ class TaurusTrendsSet(Qt.QObject, TaurusBaseComponent):
         ntrends = len(self._curves)
         if '<trend_index>' in basetitle:
             ret = [basetitle.replace('<trend_index>', "%i" % i)
-                   for i in xrange(ntrends)]
+                   for i in range(ntrends)]
         else:
             ret = [basetitle] * ntrends
         return ret
@@ -471,7 +475,7 @@ class TaurusTrendsSet(Qt.QObject, TaurusBaseComponent):
             # them to the TrendSet
             name = self.getModelName()
             rawdata = {'x': numpy.zeros(0), 'y': numpy.zeros(0)}
-            for i in xrange(ntrends):
+            for i in range(ntrends):
                 subname = "%s[%i]" % (name, i)
                 self.parent().attachRawData(rawdata, id=subname)
                 self.addCurve(subname, self.parent().curves[subname])
@@ -1171,7 +1175,7 @@ class TaurusTrend(TaurusPlot):
                     raise ValueError(
                         'composed ("X|Y") models are not supported by TaurusTrend')
                 # create a new TrendSet if not already there
-                if not self.trendSets.has_key(name):
+                if name not in self.trendSets:
                     # check if the model name is of scan type and provides a
                     # door
                     matchScan = re.search(r"scan:\/\/(.*)", name)
@@ -1474,7 +1478,7 @@ class TaurusTrend(TaurusPlot):
         miscdict["MaxBufferSize"] = self.getMaxDataBufferSize()
         self.curves_lock.acquire()
         try:
-            for tsname, ts in self.trendSets.iteritems():
+            for tsname, ts in iteritems(self.trendSets):
                 if tsname in tsnames:
                     # store a dict containing just model names (key and value
                     # are the same)
@@ -1685,7 +1689,7 @@ class TaurusTrend(TaurusPlot):
 
         self.curves_lock.acquire()
         try:
-            for n, ts in self.trendSets.iteritems():
+            for n, ts in iteritems(self.trendSets):
                 try:
                     ts.setMaxDataBufferSize(maxSize)
                 except ValueError:

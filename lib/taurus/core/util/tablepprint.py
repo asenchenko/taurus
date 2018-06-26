@@ -32,6 +32,8 @@ import operator
 import re
 import math
 
+from builtins import range
+
 
 def indent(rows, hasHeader=False, headerChar='-', delim=' | ', justify='left',
            separateRows=False, prefix='', postfix='', wrapfunc=lambda x: x):
@@ -125,7 +127,7 @@ def wrap_always(text, width):
     """A simple word-wrap function that wraps text on exactly width characters.
        It doesn't split the text in words."""
     return '\n'.join([text[width * i:width * (i + 1)]
-                      for i in xrange(int(math.ceil(1. * len(text) / width)))])
+                      for i in range(int(math.ceil(1. * len(text) / width)))])
 
 if __name__ == '__main__':
     labels = ('First Name', 'Last Name', 'Age', 'Position')

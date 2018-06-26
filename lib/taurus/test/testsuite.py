@@ -32,6 +32,8 @@ Usage::
 
 """
 
+from __future__ import print_function
+
 __docformat__ = 'restructuredtext'
 
 import os
@@ -45,9 +47,11 @@ def _filter_suite(suite, exclude_pattern, ret=None):
     if ret is None:
         ret = unittest.TestSuite()
     for e in suite:
+
         if isinstance(e, unittest.TestCase):
+            print( type(e),e._testMethodName)
             if re.match(exclude_pattern, e.id()):
-                print "Excluded %s" % e.id()
+                print("Excluded %s" % e.id())
                 continue
             ret.addTest(e)
         else:
@@ -99,7 +103,7 @@ def main():
     args = parser.parse_args()
 
     if args.version:
-        print Release.version
+        print(Release.version)
         sys.exit(0)
 
     if args.skip_gui:

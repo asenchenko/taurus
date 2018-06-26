@@ -27,6 +27,7 @@
 
 import unittest
 
+from builtins import zip
 
 class TaurusImportTestCase(unittest.TestCase):
 
@@ -36,7 +37,7 @@ class TaurusImportTestCase(unittest.TestCase):
 
     def setUp(self):
         """Preconditions: moduleexplorer utility has to be available """
-        from moduleexplorer import ModuleExplorer
+        from .moduleexplorer import ModuleExplorer
         self.explore = ModuleExplorer.explore
 
     def testImportSubmodules(self):
@@ -62,7 +63,7 @@ class TaurusImportTestCase(unittest.TestCase):
                                        exclude_patterns=exclude_patterns)
         msg = None
         if wrn:
-            msg = '\n%s' % '\n'.join(zip(*wrn)[1])
+            msg = '\n%s' % '\n'.join(list(zip(*wrn))[1])
         self.assertEqual(len(wrn), 0, msg=msg)
 
 

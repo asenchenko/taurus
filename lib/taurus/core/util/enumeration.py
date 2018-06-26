@@ -37,6 +37,7 @@ __all__ = ["EnumException", "Enumeration"]
 
 __docformat__ = "restructuredtext"
 
+from past.builtins import long, unicode
 
 class EnumException(Exception):
     """Exception thrown by :class:`Enumeration` when trying to declare an
@@ -149,13 +150,13 @@ class Enumeration(object):
             return self.lookup[i]
 
     def __getattr__(self, attr):
-        if not self.has_key(attr):
+        if attr not in self:
             raise AttributeError
         return self.lookup[attr]
 
     def __doc_enum(self):
         rl = self.reverseLookup
-        keys = rl.keys()
+        keys = list(rl)
         keys.sort()
         values = "\n".join(["    - {0} ({1})".format(rl[k], k) for k in keys])
         self.__doc__ = self._name + " enumeration. " + \
@@ -163,14 +164,14 @@ class Enumeration(object):
 
     def __str__(self):
         rl = self.reverseLookup
-        keys = rl.keys()
+        keys = list(rl)
         keys.sort()
         values = ", ".join([rl[k] for k in keys])
         return self._name + "(" + values + ")"
 
     def __repr__(self):
         rl = self.reverseLookup
-        keys = rl.keys()
+        keys = list(rl)
         keys.sort()
         values = [rl[k] for k in keys]
         return "Enumeration('" + self._name + "', " + str(values) + ")"

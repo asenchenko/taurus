@@ -42,7 +42,7 @@ from taurus.qt.qtgui.util.ui import UILoadable
 from taurus.qt.qtgui.extra_guiqwt.styles import TaurusCurveParam
 
 import guiqwt
-__guiqwt_version = map(int, guiqwt.__version__.split('.')[:3])
+__guiqwt_version = [ int(i) for i in  guiqwt.__version__.split('.')[:3] ]
 if __guiqwt_version <= [2, 3, 1]:
     import taurus.external.qt.Qwt5 as qwt
 else:

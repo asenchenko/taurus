@@ -60,15 +60,15 @@ if __name__ == '__main__':
         def bar():
             # BAR doc
             def get(self):
-                print "\tgetting", self._a
+                print("\tgetting", self._a)
                 return self._a
 
             def set(self, val):
-                print "\tsetting", val
+                print("\tsetting", val)
                 self._a = val
             return get, set
 
     foo = example()
-    print foo.bar
+    print(foo.bar)
     # foo.bar='egg'
     # print foo.bar

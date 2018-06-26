@@ -26,6 +26,9 @@
 """Utilities for creating generic tests for Taurus widgets"""
 
 import time
+
+from builtins import range
+
 import taurus.core
 import unittest
 from taurus.qt.qtgui.application import TaurusApplication
@@ -84,7 +87,7 @@ class BaseWidgetTestCase(object):
         self.assertTrue(deps <= maximum, msg)
 
     def processEvents(self, repetitions=1, sleep=0):
-         for i in xrange(repetitions):
+         for i in range(repetitions):
             time.sleep(sleep)
             self._app.processEvents()
 

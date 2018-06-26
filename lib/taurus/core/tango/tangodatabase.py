@@ -25,6 +25,8 @@
 
 """This module contains all taurus tango authority"""
 
+from __future__ import print_function
+
 __all__ = ["TangoInfo", "TangoAttrInfo", "TangoDevInfo", "TangoServInfo",
            "TangoDevClassInfo", "TangoDatabaseCache", "TangoDatabase",
            "TangoAuthority"]
@@ -35,6 +37,8 @@ import os
 import socket
 import operator
 import weakref
+
+from builtins import range
 
 from PyTango import (Database, DeviceProxy, DevFailed, ApiUtil)
 from taurus import Device
@@ -289,8 +293,8 @@ class TangoServInfo(TangoInfo):
                     if not alive:
                         break
                 self._alive = alive
-            except Exception, e:
-                print "except", e
+            except Exception as e:
+                print("except", e)
                 self._alive = False
             self._alivePending = False
         return self._alive
@@ -348,7 +352,7 @@ class TangoDatabaseCache(object):
         CD = CaselessDict
         dev_dict, serv_dict, klass_dict, alias_dict = CD(), {}, {}, CD()
 
-        for i in xrange(0, len(data), column_nb):
+        for i in range(0, len(data), column_nb):
             name, alias, exported, host, server, klass = data[i:i + column_nb]
             if name.count("/") != 2:
                 continue  # invalid/corrupted entry: just ignore it
@@ -515,9 +519,9 @@ class TangoDevTree(CaselessDict):
             for dev in other:
                 try:
                     self.addDevice(dev)
-                except Exception, e:
-                    print e
-        except Exception, e:
+                except Exception as e:
+                    print(e)
+        except Exception as e:
             raise Exception(
                 "Must give dict<obj, TangoDevInfo> or sequence<TangoDevInfo>")
 
@@ -561,9 +565,9 @@ class TangoServerTree(dict):
             for serv in other:
                 try:
                     self.addServer(serv)
-                except Exception, e:
-                    print e
-        except Exception, e:
+                except Exception as e:
+                    print(e)
+        except Exception as e:
             raise Exception(
                 "Must give dict<obj, TangoServInfo> or sequence<TangoServInfo>")
 
@@ -666,7 +670,7 @@ class TangoAuthority(TaurusAuthority):
         if host is None or port is None:
             try:
                 host, port = TangoAuthority.get_default_tango_host().rsplit(':', 1)
-            except Exception, e:
+            except Exception as e:
                 from taurus import warning
                 warning("Error getting default Tango host")
 
@@ -700,7 +704,7 @@ class TangoAuthority(TaurusAuthority):
         serv_name = self.command_inout("DbGetDeviceInfo", dev_name)[1][3]
         devs = self.get_device_class_list(serv_name)
         dev_name_lower = dev_name.lower()
-        for i in xrange(len(devs) / 2):
+        for i in range(len(devs) / 2):
             idx = i * 2
             if devs[idx].lower() == dev_name_lower:
                 return devs[idx + 1]

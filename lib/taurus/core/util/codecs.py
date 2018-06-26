@@ -72,11 +72,22 @@ import copy
 
 # need by VideoImageCodec
 import struct
+import sys
 import numpy
 
-from singleton import Singleton
-from log import Logger
-from containers import CaselessDict
+from future.utils import iteritems, PY2
+
+from .singleton import Singleton
+from .log import Logger
+from .containers import CaselessDict
+
+
+
+if PY2:
+    buffer_type = buffer, memoryview, 
+else:
+    buffer_type = memoryview,
+
 
 
 class Codec(Logger):
@@ -278,7 +289,7 @@ class PickleCodec(Codec):
             return data
         format = data[0].partition('_')[2]
 
-        if isinstance(data[1], buffer):
+        if isinstance(data[1], buffer_type):
             data = data[0], str(data[1])
 
         return format, pickle.loads(data[1])
@@ -321,7 +332,7 @@ class JSONCodec(Codec):
             format += '_%s' % data[0]
         # make it compact by default
         kwargs['separators'] = kwargs.get('separators', (',', ':'))
-        return format, json.dumps(data[1], *args, **kwargs)
+        return format, json.dumps(data[1], *args, **kwargs).encode('utf-8')
 
     def decode(self, data, *args, **kwargs):
         """decodes the given data from a json string.
@@ -338,8 +349,10 @@ class JSONCodec(Codec):
 
         ensure_ascii = kwargs.pop('ensure_ascii', False)
 
-        if isinstance(data[1], buffer):
+        if isinstance(data[1], buffer_type):
             data = data[0], str(data[1])
+        
+        data = data[0], data[1].decode('utf-8') 
 
         data = json.loads(data[1])
         if ensure_ascii:
@@ -363,7 +376,7 @@ class JSONCodec(Codec):
 
     def _transform_dict(self, dct):
         newdict = {}
-        for k, v in dct.iteritems():
+        for k, v in iteritems(dct):
             newdict[self._transform_ascii(k)] = self._transform_ascii(v)
         return newdict
 
@@ -441,7 +454,7 @@ class BSONCodec(Codec):
 
     def _transform_dict(self, dct):
         newdict = {}
-        for k, v in dct.iteritems():
+        for k, v in iteritems(dct):
             newdict[self._transform_ascii(k)] = self._transform_ascii(v)
         return newdict
 
@@ -659,7 +672,7 @@ class VideoImageCodec(Codec):
     def __packHeader(self, imgMode, frameNumber, width, height):
         magic = 0x5644454f
         version = 1
-        endian = ord(struct.pack('=H', 1)[-1])
+        endian = 0 if sys.byteorder == 'little' else 1
         hsize = struct.calcsize(self.VIDEO_HEADER_FORMAT)
         return struct.pack(self.VIDEO_HEADER_FORMAT,
                            magic,
@@ -879,7 +892,7 @@ class CodecFactory(Singleton, Logger):
         self._codec_klasses[format] = klass
 
         # del old codec if exists
-        if self._codecs.has_key(format):
+        if format in self._codecs:
             del self._codecs[format]
 
     def unregisterCodec(self, format):
@@ -889,10 +902,10 @@ class CodecFactory(Singleton, Logger):
         :param format: (str) the codec id
 
         :raises: KeyError"""
-        if self._codec_klasses.has_key(format):
+        if format in self._codec_klasses:
             del self._codec_klasses[format]
 
-        if self._codecs.has_key(format):
+        if format in self._codecs:
             del self._codecs[format]
 
     def getCodec(self, format):

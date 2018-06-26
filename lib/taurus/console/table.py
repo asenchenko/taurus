@@ -30,6 +30,8 @@ __all__ = ["Table"]
 __docformat__ = "restructuredtext"
 
 
+from builtins import range
+
 class Table:
 
     DefTermWidth = 80
@@ -123,25 +125,25 @@ class Table:
         else:
             row_head = [''] * tot_rows
 
-        for i in xrange(0, self.nr_col, disp_cols):
+        for i in range(0, self.nr_col, disp_cols):
             if i > 0:
                 nr_sep = tot_width / len(self.row_sep)
                 output.append(self.row_sep * nr_sep)
 
             row_end = min(i + disp_cols, self.nr_col)
             line = list(row_head)
-            for j in xrange(i, row_end):
+            for j in range(i, row_end):
                 elem = self.elem_list[j]
                 if chl:
                     col_head = self.col_head_str[j]
                     if j > i:
-                        for k in xrange(tot_rows):
+                        for k in range(tot_rows):
                             line[k] += self.col_sep
                     fmt = self.col_head_fmt
-                    for k in xrange(chl):
+                    for k in range(chl):
                         line[k] += fmt % (chw, col_head[k])
 
-                for k in xrange(self.nr_row):
+                for k in range(self.nr_row):
                     fmt = self.elem_fmt[k]
                     line[chl + k] += fmt % (chw, elem[k])
 

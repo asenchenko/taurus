@@ -41,6 +41,8 @@ import re
 import traceback
 from functools import partial
 
+from future.utils import iteritems
+
 # @todo: icons_dev_tree is not an included or standard module.
 #        Is anybody using it? If not, the following lines should be removed and
 #        the TaurusDevTree.setStateIcon method should be cleaned
@@ -837,7 +839,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
             if node is not None:
                 return [node]
         regexp = re.compile(extend_regexp(regexp))
-        for k, node in self.item_index.iteritems():
+        for k, node in iteritems(self.item_index):
             nname = self.getNodeText(node, full=True).lower()
             if (regexp.match(k) or regexp.match(nname)) and \
                     (not exclude or not any(re.match(x.lower(), y) for x in exclude for y in (k.lower(), nname))):
@@ -1061,7 +1063,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
         if not isinstance(dct, dict):
             dct = dict.fromkeys(dct, '')
         nodes = self.getAllNodes()
-        for name, node in nodes.iteritems():
+        for name, node in iteritems(nodes):
             name = str(name).split()[0]
             if node.isHidden():
                 continue

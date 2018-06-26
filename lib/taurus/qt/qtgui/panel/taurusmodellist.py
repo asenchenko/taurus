@@ -31,6 +31,8 @@ __all__ = ['TaurusModelModel', 'TaurusModelItem', 'TaurusModelList']
 
 import copy
 
+from builtins import range
+
 from taurus.external.qt import Qt
 import taurus
 from taurus.core.taurushelper import getSchemeFromName
@@ -188,7 +190,7 @@ class TaurusModelModel(Qt.QAbstractListModel):
         if parentindex is None:
             parentindex = Qt.QModelIndex()
         if items is None:
-            slice = [TaurusModelItem() for i in xrange(rows)]
+            slice = [TaurusModelItem() for i in range(rows)]
         else:
             slice = list(items)
             # note that the rows parameter is ignored if items is passed

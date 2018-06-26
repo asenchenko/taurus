@@ -25,6 +25,8 @@
 This module provides an icon catalog widget
 """
 
+from __future__ import print_function
+
 import os
 import hashlib
 from taurus.qt.qtgui.application import TaurusApplication
@@ -57,7 +59,7 @@ class QIconCatalogPage(GraphicalChoiceWidget):
 
         for path in Qt.QDir.searchPaths(prefix):
             if not os.path.exists(path):
-                print " %s not found. Skipping.!" % path
+                print(" %s not found. Skipping.!" % path)
                 continue
 
             for fname in os.listdir(path):
