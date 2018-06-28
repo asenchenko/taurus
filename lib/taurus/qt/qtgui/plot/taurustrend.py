@@ -39,7 +39,7 @@ import gc
 import weakref
 
 from builtins import range
-from future.utils import iteritems
+from six import iteritems, itervalues
 from past.builtins import unicode
 
 from taurus.external.qt import Qt, Qwt5
@@ -1131,7 +1131,7 @@ class TaurusTrend(TaurusPlot):
         not remove the models, it simply removes all stored data)'''
         self.curves_lock.acquire()
         try:
-            for ts in self.trendSets.itervalues():
+            for ts in itervalues(self.trendSets):
                 ts.clearTrends(replot=False)
         finally:
             self.curves_lock.release()
@@ -1332,7 +1332,7 @@ class TaurusTrend(TaurusPlot):
                     newTitlesDict = CaselessDict()
                     for curveName in curveNamesList:
                         curvetitle = titletext
-                        for ts in self.trendSets.itervalues():
+                        for ts in itervalues(self.trendSets):
                             if curveName in ts:
                                 curvetitle = ts.compileBaseTitle(curvetitle)
                                 curvetitle = curvetitle.replace(
@@ -1444,7 +1444,7 @@ class TaurusTrend(TaurusPlot):
 
         .. seealso:: :meth:`TaurusBaseComponent.setPaused`
         '''
-        for ts in self.trendSets.itervalues():
+        for ts in itervalues(self.trendSets):
             ts.setPaused(paused)
         self._isPaused = paused
 

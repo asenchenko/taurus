@@ -31,7 +31,7 @@ __docformat__ = 'restructuredtext'
 import os
 import sys
 
-from future.utils import itervalues
+from six import itervalues
 from lxml import etree
 
 from taurus.qt.qtgui.util import ExternalAppAction

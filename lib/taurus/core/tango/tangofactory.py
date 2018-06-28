@@ -39,7 +39,7 @@ except ImportError:
     debug(msg)
     raise
 
-from future.utils import iteritems
+from six import iteritems
 
 from taurus.core.taurusbasetypes import (TaurusElementType,
                                          TaurusSerializationMode)

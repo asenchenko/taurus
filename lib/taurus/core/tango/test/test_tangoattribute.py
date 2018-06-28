@@ -33,7 +33,7 @@ import numpy
 import PyTango
 import unittest
 
-from future.utils import iteritems
+from six import iteritems
 
 from taurus.core.units import Quantity, UR
 from pint import UndefinedUnitError

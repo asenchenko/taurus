@@ -37,7 +37,7 @@ import weakref
 import inspect
 
 from lxml import etree
-from future.utils import itervalues
+from six import itervalues
 from past.builtins import unicode
 
 import taurus
@@ -1357,12 +1357,12 @@ class TaurusGui(TaurusMainWindow):
 
     def hideAllPanels(self):
         '''hides all current panels'''
-        for panel in self.__panels.itervalues():
+        for panel in itervalues(self.__panels):
             panel.hide()
 
     def showAllPanels(self):
         '''shows all current panels'''
-        for panel in self.__panels.itervalues():
+        for panel in itervalues(self.__panels):
             panel.show()
 
     def onShowAssociationDialog(self):

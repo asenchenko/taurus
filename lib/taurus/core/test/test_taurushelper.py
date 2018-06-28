@@ -30,7 +30,7 @@
 __docformat__ = 'restructuredtext'
 
 import numpy
-from future.utils import iteritems
+from six import iteritems
 
 import functools
 import unittest

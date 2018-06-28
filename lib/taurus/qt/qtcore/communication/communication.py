@@ -29,7 +29,7 @@ comunications.py:
 
 from __future__ import print_function
 
-from future.utils import iteritems
+from six import iteritems
 
 from taurus.external.qt import QtCore
 import weakref

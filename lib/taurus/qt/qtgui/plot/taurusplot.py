@@ -36,7 +36,7 @@ import time
 import numpy
 
 from builtins import range
-from future.utils import iteritems
+from six import iteritems, itervalues
 from past.builtins import unicode
 
 from taurus.external.qt import Qt, Qwt5
@@ -1454,7 +1454,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
 
         :param paused: (bool) if True, the plot will be paused
         '''
-        for c in self.curves.itervalues():
+        for c in itervalues(self.curves):
             c.setPaused(paused)
         self._isPaused = paused
 
@@ -2673,7 +2673,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
         '''call safeSetData again on all curves to force a refiltering in case the scale changed its type'''
         self.curves_lock.acquire()
         try:
-            for c in self.curves.itervalues():
+            for c in itervalues(self.curves):
                 c.safeSetData()
         finally:
             self.curves_lock.release()
@@ -2929,7 +2929,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
         try:
             # get a list of *unique* axes with visible curves attached
             axes = list(
-                set([curve.yAxis() for curve in self.curves.itervalues() if curve.isVisible()]))
+                set([curve.yAxis() for curve in itervalues(self.curves) if curve.isVisible()]))
 
             n = len(axes)
             if n == 0:

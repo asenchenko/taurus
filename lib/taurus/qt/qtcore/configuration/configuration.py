@@ -32,7 +32,7 @@ __all__ = ["configurableProperty", "BaseConfigurableClass"]
 
 __docformat__ = 'restructuredtext'
 
-from future.utils import iteritems
+from six import iteritems
 from past.builtins import long, unicode
 import six
 

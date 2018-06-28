@@ -35,7 +35,7 @@ import inspect
 import glob
 import re
 
-from future.utils import itervalues
+from six import itervalues
 
 class ModuleExplorer(object):
 

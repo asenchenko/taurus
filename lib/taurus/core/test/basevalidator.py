@@ -29,7 +29,7 @@
 
 __docformat__ = 'restructuredtext'
 
-from future.utils import iteritems
+from six import iteritems
 
 from functools import partial
 from taurus.test import insertTest

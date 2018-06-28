@@ -31,7 +31,7 @@ __all__ = ["QConfigEditor"]
 
 __docformat__ = 'restructuredtext'
 
-from future.utils import PY2
+from six import PY2
 from taurus.external.qt import Qt
 if PY2:
     import cPickle as pickle

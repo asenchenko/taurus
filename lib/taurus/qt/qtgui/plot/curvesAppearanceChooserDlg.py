@@ -33,7 +33,7 @@ from __future__ import print_function
 
 import copy
 
-from future.utils import iteritems
+from six import iteritems
 
 from taurus.external.qt import Qt, Qwt5
 from taurus.core.util.containers import CaselessDict

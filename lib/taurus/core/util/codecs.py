@@ -75,7 +75,7 @@ import struct
 import sys
 import numpy
 
-from future.utils import iteritems, PY2
+from six import iteritems, PY2
 
 from .singleton import Singleton
 from .log import Logger

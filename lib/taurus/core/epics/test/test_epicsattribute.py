@@ -31,7 +31,7 @@ import numpy
 import subprocess
 import unittest
 
-from future.utils import iteritems
+from six import iteritems
 
 from taurus.core.units import Quantity
 import taurus

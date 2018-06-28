@@ -28,7 +28,7 @@ __all__ = ['EvaluationDeviceNameValidator',
 import re
 import hashlib
 
-from future.utils import iteritems
+from six import iteritems
 
 import taurus
 from taurus import isValidName, debug

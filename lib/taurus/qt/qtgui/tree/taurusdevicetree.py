@@ -41,7 +41,7 @@ import re
 import traceback
 from functools import partial
 
-from future.utils import iteritems
+from six import iteritems
 
 # @todo: icons_dev_tree is not an included or standard module.
 #        Is anybody using it? If not, the following lines should be removed and

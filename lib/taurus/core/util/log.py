@@ -46,7 +46,7 @@ import inspect
 import threading
 import functools
 
-from future.utils import iteritems, itervalues
+from six import iteritems, itervalues
 
 from .object import Object
 from .wrap import wraps
