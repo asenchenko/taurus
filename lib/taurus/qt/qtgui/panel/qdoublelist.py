@@ -36,6 +36,7 @@ __all__ = ["QDoubleListDlg"]
 __docformat__ = 'restructuredtext'
 
 from builtins import range
+from past.builtins import unicode
 
 from taurus.external.qt import Qt
 from taurus.qt.qtgui.util.ui import UILoadable

@@ -27,6 +27,8 @@ __all__ = ["TaurusValuesTable"]
 
 __docformat__ = 'restructuredtext'
 
+from past.builtins import unicode
+
 from taurus.external.qt import Qt
 from taurus.core.units import Quantity
 

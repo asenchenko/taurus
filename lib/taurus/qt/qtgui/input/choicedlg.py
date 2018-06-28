@@ -31,6 +31,8 @@ __all__ = ["GraphicalChoiceDlg", "GraphicalChoiceWidget"]
 
 __docformat__ = 'restructuredtext'
 
+from past.builtins import unicode
+
 from taurus.external.qt import Qt
 
 

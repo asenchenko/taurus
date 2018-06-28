@@ -33,6 +33,8 @@ __all__ = ['CurveConf', 'CurvesTableModel',
 import copy
 import re
 
+from past.builtins import unicode
+
 from taurus.external.qt import Qt, Qwt5
 import taurus
 import taurus.core

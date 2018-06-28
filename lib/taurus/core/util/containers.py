@@ -38,13 +38,14 @@ __all__ = ["CaselessList", "CaselessDict", "CaselessWeakValueDict", "LoopList",
 
 __docformat__ = "restructuredtext"
 
-from builtins import dict, range
+
 
 import copy
 import time
 import weakref
 import operator
 
+from builtins import dict, range
 
 class CaselessList(list):
     """A case insensitive lists that has some caseless methods. Only allows

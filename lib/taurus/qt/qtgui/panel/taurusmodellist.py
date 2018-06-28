@@ -32,6 +32,7 @@ __all__ = ['TaurusModelModel', 'TaurusModelItem', 'TaurusModelList']
 import copy
 
 from builtins import range
+from past.builtins import unicode
 
 from taurus.external.qt import Qt
 import taurus

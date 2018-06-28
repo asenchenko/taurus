@@ -34,6 +34,8 @@ __docformat__ = 'restructuredtext'
 from datetime import datetime
 
 import six
+from past.builtins import unicode
+
 from taurus.external.qt import Qt
 
 import taurus.core

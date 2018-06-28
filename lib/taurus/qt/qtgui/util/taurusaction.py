@@ -42,6 +42,8 @@ __docformat__ = 'restructuredtext'
 import os
 import xml.dom.minidom
 
+from past.builtins import unicode
+
 from taurus.external.qt import Qt
 from taurus.core.taurushelper import getSchemeFromName
 from taurus.qt.qtcore.configuration import BaseConfigurableClass

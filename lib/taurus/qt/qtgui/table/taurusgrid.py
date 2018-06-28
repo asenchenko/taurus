@@ -42,7 +42,7 @@ __docformat__ = 'restructuredtext'
 import re
 import operator
 import traceback
-import Queue
+import queue as Queue
 from functools import partial
 
 from taurus.external.qt import Qt, QtGui, QtCore

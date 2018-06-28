@@ -46,6 +46,8 @@ import datetime
 import glob
 from lxml import etree
 
+from past.builtins import unicode
+
 from taurus import tauruscustomsettings
 from taurus.external.qt import Qt
 import taurus.qt.qtgui.panel

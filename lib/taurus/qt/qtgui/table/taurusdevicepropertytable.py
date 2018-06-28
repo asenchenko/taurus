@@ -31,6 +31,8 @@ taurusdevicepropertytable.py:
 
 __all__ = ["TaurusPropTable"]
 
+from past.builtins import unicode
+
 from taurus.external.qt import Qt, QtCore, QtGui
 from taurus.qt.qtgui.base import TaurusBaseWidget
 from taurus.core.taurusdevice import TaurusDevice

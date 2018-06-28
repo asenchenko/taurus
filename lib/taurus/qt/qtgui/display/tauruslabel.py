@@ -32,6 +32,8 @@ __docformat__ = 'restructuredtext'
 import operator
 import re
 
+from past.builtins import unicode
+
 from taurus.core.taurusbasetypes import (TaurusElementType, TaurusEventType,
                                          AttrQuality, TaurusDevState)
 from taurus.external.qt import Qt

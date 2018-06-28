@@ -32,7 +32,9 @@ __all__ = ["TaurusInputPanel"]
 __docformat__ = 'restructuredtext'
 
 import collections
+
 import numpy
+import six
 
 from taurus.external.qt import Qt
 from taurus.qt.qtgui.util.ui import UILoadable
@@ -122,7 +124,7 @@ class TaurusInputPanel(Qt.QWidget):
         self.setText(input_data['prompt'])
 
         data_type = input_data.get('data_type', 'String')
-        is_seq = not isinstance(data_type, (str, unicode)) and \
+        is_seq = not isinstance(data_type, six.string_types) and \
             isinstance(data_type, collections.Sequence)
         if is_seq:
             panel, getter = self.create_selection_panel(input_data)
@@ -162,7 +164,7 @@ class TaurusInputPanel(Qt.QWidget):
         self._ui.inputWidget = combobox = Qt.QComboBox()
         items = input_data['data_type']
         for item in items:
-            is_seq = not isinstance(item, (str, unicode)) and \
+            is_seq = not isinstance(item, six.string_types) and \
                 isinstance(item, collections.Sequence)
             if is_seq:
                 text, userData = item
@@ -184,7 +186,7 @@ class TaurusInputPanel(Qt.QWidget):
         self._ui.inputWidget = buttongroup = Qt.QButtonGroup()
         buttongroup.setExclusive(True)
         for item in items:
-            is_seq = not isinstance(item, (str, unicode)) and \
+            is_seq = not isinstance(item, six.string_types) and \
                 isinstance(item, collections.Sequence)
             if is_seq:
                 text, userData = item
@@ -211,7 +213,7 @@ class TaurusInputPanel(Qt.QWidget):
         default_value = input_data.get('default_value')
         if default_value is None:
             default_value = ()
-        dft_is_seq = not isinstance(default_value, (str, unicode)) and \
+        dft_is_seq = not isinstance(default_value, six.string_types) and \
             isinstance(default_value, collections.Sequence)
         if not dft_is_seq:
             default_value = default_value,
@@ -220,7 +222,7 @@ class TaurusInputPanel(Qt.QWidget):
         listwidget.setSelectionMode(Qt.QAbstractItemView.MultiSelection)
 
         for item in items:
-            is_seq = not isinstance(item, (str, unicode)) and \
+            is_seq = not isinstance(item, six.string_types) and \
                 isinstance(item, collections.Sequence)
             if is_seq:
                 text, userData = item

@@ -33,6 +33,7 @@ __all__ = ["configurableProperty", "BaseConfigurableClass"]
 __docformat__ = 'restructuredtext'
 
 from future.utils import iteritems
+from past.builtins import long, unicode
 import six
 
 class configurableProperty:
@@ -59,7 +60,7 @@ class configurableProperty:
 
     def applyConfig(self, value, depth=-1):
         '''calls the fset function for this property with the given value. The depth parameter is ignored'''
-        if isinstance(self.fget, basestring):  # fget is not a method but a method name...
+        if isinstance(self.fget, six.string_types):  # fget is not a method but a method name...
             getattr(self._obj, self.fset)(value)
         else:
             self.fset(value)

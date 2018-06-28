@@ -32,6 +32,8 @@ __all__ = ["TaurusNexusBrowser"]
 import numpy
 import posixpath
 
+from past.builtins import unicode
+
 from PyMca5.PyMcaGui.io.hdf5 import HDF5Widget, HDF5Info, HDF5DatasetTable
 from taurus.external.qt import Qt
 

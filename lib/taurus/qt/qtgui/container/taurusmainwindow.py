@@ -34,6 +34,8 @@ __docformat__ = 'restructuredtext'
 import os
 import sys
 
+from past.builtins import unicode
+
 from taurus import tauruscustomsettings
 from taurus.core.util import deprecation_decorator
 from taurus.external.qt import Qt

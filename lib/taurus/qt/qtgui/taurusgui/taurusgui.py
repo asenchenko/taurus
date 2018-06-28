@@ -38,6 +38,7 @@ import inspect
 
 from lxml import etree
 from future.utils import itervalues
+from past.builtins import unicode
 
 import taurus
 from taurus import tauruscustomsettings

@@ -70,7 +70,6 @@ class Singleton(object):
     _the_instance = None
 
     def __new__(cls, *p, **k):
-        print("PPPP",cls,p,k)
         # srubio: added type checking
         if cls != type(cls._the_instance):
             cls._the_instance = object.__new__(cls)

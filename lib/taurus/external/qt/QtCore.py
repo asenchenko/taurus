@@ -25,6 +25,7 @@
 
 """This module exposes QtCore module"""
 
+import six
 from taurus.external.qt import API_NAME
 
 __backend = API_NAME
@@ -65,7 +66,7 @@ def __from_qvariant_1(qobj=None, convfunc=None):
             return qobj.toInt()[0]
         elif convfunc is float:
             return qobj.toDouble()[0]
-    elif isinstance(convfunc, (str, unicode)):
+    elif isinstance(convfunc, six.string_types):
         return getattr(qobj, convfunc)()
 
 

@@ -37,6 +37,7 @@ import numpy
 
 from builtins import range
 from future.utils import iteritems
+from past.builtins import unicode
 
 from taurus.external.qt import Qt, Qwt5
 
