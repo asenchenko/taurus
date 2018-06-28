@@ -31,7 +31,7 @@ __all__ = ["TaurusBaseTableWidget"]
 __docformat__ = 'restructuredtext'
 
 from taurus.qt.qtgui.model import TaurusBaseModelWidget
-from qtable import QBaseTableWidget
+from .qtable import QBaseTableWidget
 
 
 class TaurusBaseTableWidget(QBaseTableWidget, TaurusBaseModelWidget):

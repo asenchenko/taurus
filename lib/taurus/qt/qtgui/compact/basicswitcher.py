@@ -33,7 +33,7 @@ __docformat__ = 'restructuredtext'
 from taurus.external.qt import Qt
 from taurus.qt.qtgui.display import TaurusLabel, TaurusLed
 from taurus.qt.qtgui.input import TaurusValueLineEdit, TaurusValueCheckBox
-from abstractswitcher import TaurusReadWriteSwitcher
+from .abstractswitcher import TaurusReadWriteSwitcher
 
 
 class TaurusLabelEditRW(TaurusReadWriteSwitcher):

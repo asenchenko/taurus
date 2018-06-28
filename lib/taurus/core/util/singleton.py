@@ -26,6 +26,8 @@
 """This module contains a class which can be used as a super class for all
 classes that need to implement the Singleton design pattern."""
 
+from __future__ import print_function
+
 __all__ = ["Singleton"]
 
 __docformat__ = "restructuredtext"
@@ -68,6 +70,7 @@ class Singleton(object):
     _the_instance = None
 
     def __new__(cls, *p, **k):
+        print("PPPP",cls,p,k)
         # srubio: added type checking
         if cls != type(cls._the_instance):
             cls._the_instance = object.__new__(cls)

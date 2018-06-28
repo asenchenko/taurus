@@ -25,6 +25,8 @@
 
 """Extension of :mod:`guiqwt.curve`"""
 
+from __future__ import print_function
+
 __all__ = ["TaurusCurveItem"]
 
 from taurus.external.qt import Qt
@@ -356,7 +358,7 @@ def taurusCurveMain():
         elif n == 2:
             mx, my = mx_my
         else:
-            print "Invalid model: %s\n" % mx_my
+            print("Invalid model: %s\n" % mx_my)
             parser.print_help(sys.stderr)
             sys.exit(1)
         # cycle colors

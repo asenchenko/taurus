@@ -27,6 +27,8 @@
 TaurusPlotConf: widget for configurating the contents and appearance of a TaurusPlot
 """
 
+from __future__ import print_function
+
 __all__ = ['TaurusPlotConfDlg']
 
 raise NotImplementedError('Under Construction!')
@@ -121,7 +123,7 @@ class TaurusPlotConfDlg(Qt.QWidget):
         return new
 
     def onModelsAdded(self, models):
-        print models
+        print(models)
         nmodels = len(models)
         rowcount = self.model.rowCount()
         self.model.insertRows(rowcount, nmodels)
@@ -130,14 +132,14 @@ class TaurusPlotConfDlg(Qt.QWidget):
                                value=Qt.QVariant(m))
 
     def onApply(self):
-        print "APPLY!!! (todo)"
+        print("APPLY!!! (todo)")
         curveConfs = self.model.dumpData()
 
         for c in curveConfs:
-            print repr(c)
+            print(repr(c))
 
     def onReload(self):
-        print "RELOAD!!! (todo)"
+        print("RELOAD!!! (todo)")
 
 
 class demo(Qt.QDialog):
@@ -200,7 +202,7 @@ class demo(Qt.QDialog):
 
     def onData(self):
         cmds = self.model.dumpData()
-        print self.model.curves
+        print(self.model.curves)
 
 
 def main1():

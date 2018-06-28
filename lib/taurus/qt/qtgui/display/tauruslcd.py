@@ -106,7 +106,7 @@ class TaurusLCDControllerAttribute(TaurusScalarAttributeControllerHelper, Taurus
                 for i in idx:
                     value = value[i]
             return widget.displayValue(value)
-        except Exception, e:
+        except Exception as e:
             return widget.getNoneValue()
 
 

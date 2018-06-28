@@ -38,7 +38,7 @@ from taurus.external.qt import Qt
 from taurus.core import DataFormat, AttrQuality, DataType
 
 from taurus.qt.qtgui.base import TaurusBaseWidget
-from qled import QLed
+from .qled import QLed
 
 _QT_PLUGIN_INFO = {
     'module': 'taurus.qt.qtgui.display',

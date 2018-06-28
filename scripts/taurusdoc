@@ -28,6 +28,8 @@ This script is designed to provide taurus developers with a fast way to test
 sphinx documentation from source code files or RST files.
 """
 
+from __future__ import print_function
+
 import sys
 import os
 import shutil
@@ -50,7 +52,7 @@ sys.path.append(abspath('..', 'doc'))
 try:
     import auto_rst4api
 except ImportError:
-    print "taurusdoc can only be executed from a source distribution of taurus"
+    print("taurusdoc can only be executed from a source distribution of taurus")
     sys.exit(1)
 
 __INDEX = """
@@ -79,7 +81,7 @@ class RstCreator(auto_rst4api.Auto_rst4API_Creator):
         ofname = os.path.join(docparentpath, "_%s.rst" % classname)
 
         if self.verbose:
-            print 'creating "%s" ...' % ofname,
+            print('creating "%s" ...' % ofname, end=' ')
         info = dict(modulename=module.__name__,
                     basemodulename=module.__name__.split('.')[-1],
                     modulepath=module.__path__,
@@ -96,10 +98,10 @@ class RstCreator(auto_rst4api.Auto_rst4API_Creator):
             f.write('\n'.join((self.AUTOGEN_SIGNATURE, self.AUTOGEN_MESSAGE, text)))
             f.close()
             if self.verbose:
-                print ' ok.'
+                print(' ok.')
         else:
             if self.verbose:
-                print ' skipping (file already exists)'
+                print(' skipping (file already exists)')
 
 
 def main():

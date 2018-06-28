@@ -23,9 +23,11 @@
 ##
 #############################################################################
 
-print "*" * 77
-print \
-    """
+from __future__ import print_function
+
+print("*" * 77)
+print(
+"""
 If you are seeing this, it is because you tried to access qwtplot.py directly.
 All funcionality has been moved to taurusplot.py, taurustrend.py and scales.py
 
@@ -35,4 +37,5 @@ importing them from taurus.qt.qtgui.plot
 If you were trying to launch a stand-alone Taurusplot or TaurusTrend from a script,
 you should update such script.
 """
-print "*" * 77
+)
+print("*" * 77)

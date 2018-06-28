@@ -42,16 +42,22 @@ import unittest
 import taurus
 
 
+
+
 def _filter_suite(suite, exclude_pattern, ret=None):
     """removes TestCases from a suite based on regexp matching on the Test id"""
     if ret is None:
         ret = unittest.TestSuite()
+
+
     for e in suite:
 
         if isinstance(e, unittest.TestCase):
-            print( type(e),e._testMethodName)
+            
+            if (e.__module__ == 'unittest.case'):
+                continue
+            
             if re.match(exclude_pattern, e.id()):
-                print("Excluded %s" % e.id())
                 continue
             ret.addTest(e)
         else:
@@ -63,6 +69,8 @@ def get_taurus_suite(exclude_pattern='(?!)'):
     """discover all tests in taurus, except those matching `exclude_pattern`"""
     loader = unittest.defaultTestLoader
     start_dir = os.path.dirname(taurus.__file__)
+
+
     suite = loader.discover(start_dir, top_level_dir=os.path.dirname(start_dir))
     return _filter_suite(suite, exclude_pattern)
 

@@ -39,7 +39,7 @@ from taurus.qt.qtgui.graphic.taurusgraphic import parseTangoUri, TaurusGraphicsI
 from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE
 from taurus.qt.qtgui.base import TaurusBaseWidget
 
-import jdraw_parser
+from . import jdraw_parser
 
 
 class TaurusJDrawSynopticsView(Qt.QGraphicsView, TaurusBaseWidget):

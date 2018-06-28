@@ -32,7 +32,7 @@ __docformat__ = 'restructuredtext'
 from taurus.external.qt import Qt
 from taurus.qt.qtgui.base import TaurusBaseComponent
 
-from taurusbasecontainer import TaurusBaseContainer
+from .taurusbasecontainer import TaurusBaseContainer
 
 
 class TaurusScrollArea(Qt.QScrollArea, TaurusBaseContainer):

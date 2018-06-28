@@ -33,6 +33,7 @@ __all__ = ["configurableProperty", "BaseConfigurableClass"]
 __docformat__ = 'restructuredtext'
 
 from future.utils import iteritems
+import six
 
 class configurableProperty:
     '''A dummy class used to handle properties with the configuration API
@@ -50,7 +51,7 @@ class configurableProperty:
 
     def createConfig(self, allowUnpickable=False):
         '''returns value returned by the fget function of this property. the allowUnpickable parameter is ignored'''
-        if isinstance(self.fget, basestring):  # fget is not a method but a method name...
+        if isinstance(self.fget, six.string_types):  # fget is not a method but a method name...
             result = getattr(self._obj, self.fget)()
         else:
             result = self.fget()

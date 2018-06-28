@@ -563,7 +563,7 @@ class TaurusCurve(Qwt5.QwtPlotCurve, TaurusBaseComponent):
             return
         try:
             self.setXYFromModel(value)
-        except Exception, e:
+        except Exception as e:
             self._onDroppedEvent(reason=str(e))
             return
         self._updateMarkers()
@@ -1466,7 +1466,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
 
     def __debug(self, *args, **kwargs):
         '''put code here that you want to debug'''
-        print "!!!!!!!!!!!!!!!1", self.pos()
+        print("!!!!!!!!!!!!!!!1", self.pos())
         Qt.QToolTip.showText(self.mapToGlobal(self.pos()),
                              "ASDASDASDASD DASDAS ASDA", self)
 
@@ -1577,7 +1577,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
         TaurusPlot.getPlot()'''
         self.info(
             'DEPRECATION WARNING!: Calling TaurusPlot.getPlot() is deprecated. Use the TaurusPlot object itself instead')
-        print self.sender()
+        print(self.sender())
         return self
 
     def getCurve(self, name):
@@ -2408,7 +2408,7 @@ class TaurusPlot(Qwt5.QwtPlot, TaurusBaseWidget):
                     rawdatadict[name] = curve.getRawData()
                 else:
                     tangodict[name] = curve.getModel()
-        except Exception, e:
+        except Exception as e:
             self.error(
                 'Exception while gathering curves configuration info' + str(e))
         finally:
@@ -3734,12 +3734,12 @@ def main():
 
         def exportIfAllCurves(curve, trend=w, counters=curves):
             curve = str(curve)
-            print '*' * 10 + ' %s: Event received for %s  ' % (datetime.now().isoformat(), curve) + '*' * 10
+            print('*' * 10 + ' %s: Event received for %s  ' % (datetime.now().isoformat(), curve) + '*' * 10)
             if curve in counters:
                 counters[curve] += 1
                 if all(counters.values()):
                     trend.exportPdf(options.export_file)
-                    print '*' * 10 + ' %s: Exported to : %s  ' % (datetime.now().isoformat(), options.export_file) + '*' * 10
+                    print('*' * 10 + ' %s: Exported to : %s  ' % (datetime.now().isoformat(), options.export_file) + '*' * 10)
                     trend.close()
             return
         if not curves:

@@ -74,7 +74,7 @@ def main():
                 #_log.debug("E2: Canceled %s (widget doesn't have getQtDesignerPluginInfo())" % name)
                 e2_nb += 1
                 cont = True
-            except Exception, e:
+            except Exception as e:
                 #_log.debug("E3: Canceled %s (%s)" % (name, str(e)))
                 e3_nb += 1
                 cont = True

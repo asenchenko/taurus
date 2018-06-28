@@ -156,6 +156,7 @@ def __initializeQtLogging():
     elif hasattr(QtCore, "qInstallMsgHandler"):
         def taurusMsgHandler(msg_type, msg):
             f = QT_LEVEL_MATCHER.get(msg_type)
+            print(type(msg))
             return f("Qt: " + msg)
         QtCore.qInstallMsgHandler(taurusMsgHandler)
 

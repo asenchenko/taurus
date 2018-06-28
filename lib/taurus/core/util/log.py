@@ -46,7 +46,7 @@ import inspect
 import threading
 import functools
 
-from future.utils import iteritems
+from future.utils import iteritems, itervalues
 
 from .object import Object
 from .wrap import wraps
@@ -64,7 +64,7 @@ class _DeprecationCounter(defaultdict):
 
     def getTotal(self):
         c = 0
-        for v in self.itervalues():
+        for v in itervalues(self):
             c += v
         return c
 

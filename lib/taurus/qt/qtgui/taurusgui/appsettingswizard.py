@@ -33,6 +33,8 @@ time and those customizations will also be stored, this file defines what a
 user will find when launching the GUI for the first time.
 """
 
+from __future__ import print_function
+
 __all__ = ["AppSettingsWizard", "ExternalAppEditor"]
 
 import os
@@ -241,7 +243,7 @@ class ProjectPage(BasePage):
         if not os.path.exists(dirname):
             try:
                 os.makedirs(dirname)
-            except Exception, e:
+            except Exception as e:
                 Qt.QMessageBox.warning(self, 'Error creating project directory',
                                        'Could not create the project directory.\nReason:%s' % repr(
                                            e),
@@ -260,7 +262,7 @@ class ProjectPage(BasePage):
             if option == Qt.QMessageBox.Yes:
                 try:
                     self.wizard().loadXml(fname)
-                except Exception, e:
+                except Exception as e:
                     Qt.QMessageBox.warning(self, 'Error loading project configuration',
                                            'Could not load the existing configuration.\nReason:%s' % repr(
                                                e),
@@ -1304,7 +1306,7 @@ class OutroPage(BasePage):
     def validatePage(self):
         try:
             self.createProject()
-        except Exception, e:
+        except Exception as e:
             Qt.QMessageBox.warning(self, 'Error creating project',
                                    'Could not create project files. \nReason:%s' % repr(
                                        e),
@@ -1398,9 +1400,9 @@ class OutroPage(BasePage):
                              'Application project created', msg, Qt.QMessageBox.Ok, self)
         dlg.setDetailedText(details)
         dlg.exec_()
-        print 
-        print msg + details
-        print
+        print()
+        print(msg + details)
+        print()
 
 
 class AppSettingsWizard(Qt.QWizard):
@@ -1487,7 +1489,7 @@ class AppSettingsWizard(Qt.QWizard):
     def getXml(self):
         try:
             return self.__getitem__("xml")
-        except Exception, e:
+        except Exception as e:
             return None
 
     def __setitem__(self, name, value):
@@ -1499,7 +1501,7 @@ class AppSettingsWizard(Qt.QWizard):
             if isinstance(p, BasePage):
                 try:
                     return p[name]()
-                except Exception, e:
+                except Exception as e:
                     pass
         return self._item_funcs[name]()
 

@@ -63,6 +63,8 @@ Needed to cast params as floats in function def (or simply divide by 2.0).
 
 """
 
+from __future__ import print_function
+
 __all__ = ["accepts", "returns"]
 
 __docformat__ = "restructuredtext"
@@ -97,7 +99,7 @@ def accepts(*types, **kw):
                 if argtypes != types:
                     msg = info(f.__name__, types, argtypes, 0)
                     if debug == 1:
-                        print >> sys.stderr, 'TypeWarning: ', msg
+                        print('TypeWarning: ', msg, file=sys.stderr)
                     elif debug == 2:
                         raise TypeError, msg
                 return f(*args)
@@ -138,7 +140,7 @@ def returns(ret_type, **kw):
                 if res_type != ret_type:
                     msg = info(f.__name__, (ret_type,), (res_type,), 1)
                     if debug == 1:
-                        print >> sys.stderr, 'TypeWarning: ', msg
+                        print('TypeWarning: ', msg, file=, file=sys.stderr)
                     elif debug == 2:
                         raise TypeError, msg
                 return result

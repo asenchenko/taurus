@@ -49,7 +49,7 @@ from taurus.external.qt import Qt
 from taurus.qt.qtgui.model import FilterToolBar
 from taurus.qt.qtgui.util import ActionFactory
 
-from qtable import QBaseTableWidget
+from .qtable import QBaseTableWidget
 
 LEVEL, TIME, MSG, NAME, ORIGIN = range(5)
 HORIZ_HEADER = 'Level', 'Time', 'Message', 'By', 'Origin'

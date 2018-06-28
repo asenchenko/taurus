@@ -45,6 +45,6 @@ TaurusDatabase = TaurusAuthority
 #     from taurus.core.tango.tangodatabase import TangoDevClassInfo as \
 #                                                             TaurusDevClassInfo
 #     from taurus.core.tango.tangodatabase import TangoServInfo as TaurusServInfo
-# except ImportError, e:
+# except ImportErroras e:
 #     warn('taurusdatabase: Cannot import tango info objects: %s', repr(e))
 #

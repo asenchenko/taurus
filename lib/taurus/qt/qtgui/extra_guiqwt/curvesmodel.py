@@ -26,6 +26,9 @@
 """
 curvesmodel Model and view for new CurveItem configuration
 """
+
+from __future__ import print_function
+
 __all__ = ['TaurusCurveItemTableModel', 'CurveItemConf', 'CurveItemConfDlg']
 #raise UnimplementedError('Under Construction!')
 
@@ -488,7 +491,7 @@ class CurveItemConfDlg(Qt.QWidget):
         self.applied.emit()
 
     def onReload(self):
-        print "RELOAD!!! (todo)"
+        print("RELOAD!!! (todo)")
 
 
 #

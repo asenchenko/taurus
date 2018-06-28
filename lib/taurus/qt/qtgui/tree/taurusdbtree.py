@@ -37,7 +37,7 @@ from taurus.core.taurusauthority import TaurusAuthority
 from taurus.qt.qtcore.model import *
 from taurus.qt.qtgui.base import TaurusBaseWidget
 from taurus.qt.qtgui.icon import getElementTypeIcon, getElementTypeIconName
-from taurustree import TaurusBaseTreeWidget
+from .taurustree import TaurusBaseTreeWidget
 
 
 class TaurusDbTreeWidget(TaurusBaseTreeWidget):

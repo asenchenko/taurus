@@ -143,6 +143,12 @@ class Enumeration(object):
         self._uniqueId += 1
         return n
 
+    def __contains__(self, i):
+        if isinstance(i, (int, long)):
+            return i in self.reverseLookup
+        elif isinstance(i, (str, unicode)):
+            return i in self.lookup
+
     def __getitem__(self, i):
         if isinstance(i, (int, long)):
             return self.whatis(i)

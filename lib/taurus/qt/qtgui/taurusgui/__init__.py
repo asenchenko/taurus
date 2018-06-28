@@ -52,11 +52,11 @@ prevail).
 
 __docformat__ = 'restructuredtext'
 
-import utils
-from paneldescriptionwizard import *
-from taurusgui import *
-from appsettingswizard import *
+from . import utils
+from .paneldescriptionwizard import *
+from .taurusgui import *
+from .appsettingswizard import *
 try:
-    from macrolistener import *
+    from .macrolistener import *
 except ImportError:
     pass  # allow for sardana not being installed

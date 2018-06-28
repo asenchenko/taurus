@@ -98,7 +98,7 @@ def calculateTestFuzziness(test, maxtries=100, maxfails=10, **kwargs):
              times that the test should be passed to have a confidence>99%%
              that the bug is fixed'
     '''
-    print ("Running the test %i times (or until it fails %i times)" +
+    print("Running the test %i times (or until it fails %i times)" +
            "to estimate the failure rate") % (maxtries, maxfails)
     import numpy
 

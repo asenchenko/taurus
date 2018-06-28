@@ -29,6 +29,8 @@ curvesAppearanceChooserDlg.py:
     for a QwtPlot-derived widget (like Taurusplot)
 """
 
+from __future__ import print_function
+
 import copy
 
 from future.utils import iteritems
@@ -150,7 +152,7 @@ class CurvesAppearanceChooser(Qt.QWidget):
         self.lWidthSB.valueChanged.connect(self.onControlChanged)
         self.sFillCB.stateChanged.connect(self.onControlChanged)
         self.cFillCB.stateChanged.connect(self.onControlChanged)
-        # except Exception, e:
+        # except Exception as e:
         # print "CURVE APPEARANCE EXCEPTION:",str(e)
 
     def setCurves(self, curvePropDict):
@@ -432,10 +434,10 @@ class CurveAppearanceProperties(object):
 
     def _print(self):
         """Just for debug"""
-        print "-" * 77
+        print("-" * 77)
         for k in self.propertyList:
-            print k + "= ", self.__getattribute__(k)
-        print "-" * 77
+            print(k + "= ", self.__getattribute__(k))
+        print("-" * 77)
 
     @staticmethod
     def inConflict_update_a(a, b):

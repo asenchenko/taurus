@@ -31,7 +31,7 @@ __all__ = ["TaurusBaseTreeWidget"]
 __docformat__ = 'restructuredtext'
 
 from taurus.qt.qtgui.model import TaurusBaseModelWidget
-from qtree import QBaseTreeWidget
+from .qtree import QBaseTreeWidget
 
 
 class TaurusBaseTreeWidget(QBaseTreeWidget, TaurusBaseModelWidget):

@@ -255,7 +255,7 @@ class Properties(object):
         try:
             lines = stream.readlines()
             self.__parse(lines)
-        except IOError, e:
+        except IOErroras e:
             raise
 
     def getProperty(self, key):
@@ -302,7 +302,7 @@ class Properties(object):
                 out.write(''.join((prop, '=', self.escape(val), '\n')))
 
             out.close()
-        except IOError, e:
+        except IOErroras e:
             raise
 
     def getPropertyDict(self):

@@ -29,6 +29,8 @@ qdoublelist.py: Provides a generic dialog containing two list which can move
 items from one to the other
 """
 
+from __future__ import print_function
+
 __all__ = ["QDoubleListDlg"]
 
 __docformat__ = 'restructuredtext'
@@ -134,9 +136,9 @@ def main():
                          list1=['11', '22'], list2=['123', '33'])
     result = dlg.exec_()
 
-    print "Result", result
-    print "list1", dlg.getAll1()
-    print "list2", dlg.getAll2()
+    print("Result", result)
+    print("list1", dlg.getAll1())
+    print("list2", dlg.getAll2())
 
 
 if __name__ == "__main__":

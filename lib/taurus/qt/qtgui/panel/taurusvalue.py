@@ -820,7 +820,7 @@ class TaurusValue(Qt.QWidget, TaurusBaseWidget):
         try:
             klass = self.readWidgetClassFactory(self.readWidgetClassID)
             self._readWidget = self._newSubwidget(self._readWidget, klass)
-        except Exception, e:
+        except Exception as e:
             self._destroyWidget(self._readWidget)
             self._readWidget = Qt.QLabel('[Error]')
             msg = 'Error creating read widget:\n' + str(e)

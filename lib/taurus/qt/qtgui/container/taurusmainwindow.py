@@ -37,7 +37,7 @@ import sys
 from taurus import tauruscustomsettings
 from taurus.core.util import deprecation_decorator
 from taurus.external.qt import Qt
-from taurusbasecontainer import TaurusBaseContainer
+from .taurusbasecontainer import TaurusBaseContainer
 
 from taurus.qt.qtcore.configuration import BaseConfigurableClass
 from taurus.qt.qtgui.util import ExternalAppAction
@@ -620,7 +620,7 @@ class TaurusMainWindow(Qt.QMainWindow, TaurusBaseContainer):
             ba = Qt.from_qvariant(settings.value(
                 "TaurusConfig"), 'toByteArray') or Qt.QByteArray()
             self.applyQConfig(ba)
-        except Exception, e:
+        except Exception as e:
             msg = 'Problem loading configuration from "%s". Some settings may not be restored.\n Details: %s' % (
                 unicode(settings.fileName()), repr(e))
             self.error(msg)

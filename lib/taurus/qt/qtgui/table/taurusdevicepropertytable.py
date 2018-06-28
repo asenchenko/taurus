@@ -54,7 +54,7 @@ class TaurusPropTable(QtGui.QTableWidget, TaurusBaseWidget):
             self.defineStyle()
             self.db = None
 
-        except Exception, e:
+        except Exception as e:
             self.traceback()
 
     #-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-
@@ -365,7 +365,7 @@ class EditTextDialog(QtGui.QDialog):
     """ This class create the dialog using to edit multiply text """
 
     def __init__(self, parent=None):
-        print ('In EditTextDialog.__init__()')
+        print('In EditTextDialog.__init__()')
         QtGui.QDialog.__init__(self, parent)
         self.setModal(1)
         self.initComponents()
@@ -388,7 +388,7 @@ class EditTextDialog(QtGui.QDialog):
         widgetLayout.addWidget(self.buttonBox)
 
     def pressOK(self):
-        print ('In EditTextDialog.pressOk()')
+        print('In EditTextDialog.pressOk()')
         self.new_text = self.editText.toPlainText()
         self.result = 1
         self.close()

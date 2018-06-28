@@ -31,8 +31,13 @@ __all__ = ["QConfigEditor"]
 
 __docformat__ = 'restructuredtext'
 
+from future.utils import PY2
 from taurus.external.qt import Qt
-import cPickle as pickle
+if PY2:
+    import cPickle as pickle
+else:
+    import pickle
+
 import os
 import tempfile
 from taurus.qt.qtcore.configuration import BaseConfigurableClass
@@ -346,7 +351,7 @@ class QConfigEditorModel(Qt.QStandardItemModel):
         if qstate is not None and not qstate.isNull():
             try:
                 result = pickle.loads(qstate.data())
-            except Exception, e:
+            except Exception as e:
                 msg = 'problems loading TaurusConfig: \n%s' % repr(e)
                 Qt.QMessageBox.critical(None, 'Error loading settings', msg)
         return result

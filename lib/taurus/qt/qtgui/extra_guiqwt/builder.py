@@ -31,8 +31,8 @@ __docformat__ = 'restructuredtext'
 
 import guiqwt.builder
 
-from curve import TaurusCurveItem, TaurusTrendItem
-from image import (TaurusImageItem, TaurusRGBImageItem, TaurusEncodedImageItem,
+from .curve import TaurusCurveItem, TaurusTrendItem
+from .image import (TaurusImageItem, TaurusRGBImageItem, TaurusEncodedImageItem,
                    TaurusEncodedRGBImageItem, TaurusXYImageItem)
 from guiqwt.curve import CurveParam
 from guiqwt.image import ImageParam, XYImageItem

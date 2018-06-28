@@ -763,12 +763,12 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
                 label = aname == my_attr.label and aname.lower(
                 ) or "%s (%s)" % (aname.lower(), my_attr.label)
                 dct[str(my_device).lower() + '/' + label] = 0
-        except PyTango.DevFailed, e:
+        except PyTango.DevFailedas e:
             self.warning('addAttrToDev(%s): %s' % (my_device, str(e)))
             qmsg = Qt.QMessageBox(Qt.QMessageBox.Critical, '%s Error' %
                                   my_device, '%s not available' % my_device, Qt.QMessageBox.Ok, self)
             qmsg.show()
-        except Exception, e:
+        except Exception as e:
             self.warning('addAttrToDev(%s): %s' % (my_device, str(e)))
             qmsg = Qt.QMessageBox(Qt.QMessageBox.Critical, '%s Error' %
                                   my_device, str(e), Qt.QMessageBox.Ok, self)
@@ -1300,7 +1300,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
                     elif not last_was_separator:
                         menu.addSeparator()
                         last_was_separator = True
-                except Exception, e:
+                except Exception as e:
                     self.warning('Unable to add Menu Action: %s:%s' % (t, e))
 
         if hasattr(node, 'ExpertMenu'):
@@ -1321,7 +1321,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
                     elif not last_was_separator:
                         expert.addSeparator()
                         last_was_separator = True
-                except Exception, e:
+                except Exception as e:
                     self.warning('Unable to add Expert Action: %s:%s' % (t, e))
         # menu.addSeparator()
         menu.exec_(event.globalPos())
@@ -1668,7 +1668,7 @@ class TaurusSearchTree(TaurusWidget):
             try:
                 setattr(self, k, partial(
                     self.method_forwarder, method=k, object=self.tree))
-            except Exception, e:
+            except Exception as e:
                 self.warning('Unable to add slot %s: %s' % (k, e))
         # Event forwarding ...
         self.tree.refreshTree.connect(self.refreshTree)

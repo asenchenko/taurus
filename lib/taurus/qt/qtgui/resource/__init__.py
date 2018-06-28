@@ -34,4 +34,4 @@ __deprecated(dep='taurus.qt.qtgui.resource',
            alt='taurus.qt.qtgui.icon',
            rel='4.0')
 
-from taurus_resource_utils import *
+from .taurus_resource_utils import *

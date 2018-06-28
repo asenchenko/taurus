@@ -34,7 +34,7 @@ from taurus.external.qt import Qt
 
 from taurus.core.taurusbasetypes import TaurusEventType
 from taurus.qt.qtgui.base import TaurusBaseWritableWidget
-from qwheel import QWheelEdit
+from .qwheel import QWheelEdit
 
 
 class TaurusWheelEdit(QWheelEdit, TaurusBaseWritableWidget):

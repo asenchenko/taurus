@@ -36,6 +36,8 @@ to be used within a TaurusGui for managing panels for:
 
  # TODO: move to sardana.taurus
 
+from __future__ import print_function
+
 __all__ = ['MacroBroker', 'DynamicPlotManager']
 __docformat__ = 'restructuredtext'
 
@@ -596,5 +598,5 @@ if __name__ == "__main__":
 
     b.setModel('door/cp1/1')
 
-    print '...'
+    print('...')
     sys.exit(app.exec_())
