@@ -98,10 +98,12 @@ class TangoFactory(Singleton, TaurusFactory, Logger):
     def __init__(self):
         """ Initialization. Nothing to be done here for now."""
         pass
+        
 
     def init(self, *args, **kwargs):
         """Singleton instance initialization.
            **For internal usage only**"""
+        
         name = self.__class__.__name__
         self.call__init__(Logger, name)
         self.call__init__(TaurusFactory)

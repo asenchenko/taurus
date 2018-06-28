@@ -303,54 +303,54 @@ class CaselessDict(dict):
 class CaselessWeakValueDict(weakref.WeakValueDictionary):
 
     def __init__(self, other=None):
-        weakref.WeakValueDictionary.__init__(self)
+        super(CaselessWeakValueDict, self).__init__(self )
         if other:
             # Doesn't do keyword args
             if isinstance(other, dict):
                 for k, v in other.items():
-                    weakref.WeakValueDictionary.__setitem__(self, k.lower(), v)
+                    super(CaselessWeakValueDict, self).__setitem__( k.lower(), v)
             else:
                 for k, v in other:
-                    weakref.WeakValueDictionary.__setitem__(self, k.lower(), v)
+                    super(CaselessWeakValueDict, self).__setitem__( k.lower(), v)
 
     def __getitem__(self, key):
-        return weakref.WeakValueDictionary.__getitem__(self, key.lower())
+        return super(CaselessWeakValueDict, self).__getitem__( key.lower())
 
     def __setitem__(self, key, value):
-        weakref.WeakValueDictionary.__setitem__(self, key.lower(), value)
+        super(CaselessWeakValueDict, self).__setitem__( key.lower(), value)
 
     def __contains__(self, key):
-        return weakref.WeakValueDictionary.__contains__(self, key.lower())
+        return super(CaselessWeakValueDict, self).__contains__( key.lower())
 
     def has_key(self, key):
         """overwritten from :meth:`weakref.WeakValueDictionary.has_key`"""
-        return weakref.WeakValueDictionary.__contains__(self, key.lower())
+        return super(CaselessWeakValueDict, self).__contains__( key.lower())
 
     def get(self, key, def_val=None):
         """overwritten from :meth:`weakref.WeakValueDictionary.get`"""
-        return weakref.WeakValueDictionary.get(self, key.lower(), def_val)
+        return super(CaselessWeakValueDict, self).get(key.lower(), def_val)
 
     def setdefault(self, key, def_val=None):
         """overwritten from :meth:`weakref.WeakValueDictionary.setdefault`"""
-        return weakref.WeakValueDictionary.setdefault(self, key.lower(), def_val)
+        return super(CaselessWeakValueDict, self).setdefault( key.lower(), def_val)
 
     def update(self, other):
         """overwritten from :meth:`weakref.WeakValueDictionary.update`"""
         for k, v in other.items():
-            weakref.WeakValueDictionary.__setitem__(self, k.lower(), v)
+            super(CaselessWeakValueDict, self).__setitem__( k.lower(), v)
 
     def fromkeys(self, iterable, value=None):
         d = CaselessWeakValueDict()
         for k in iterable:
-            weakref.WeakValueDictionary.__setitem__(d, k.lower(), value)
+            super(CaselessWeakValueDict, self).__setitem__(d, k.lower(), value)
         return d
 
     def pop(self, key, def_val=None):
         """overwritten from :meth:`weakref.WeakValueDictionary.pop`"""
-        return weakref.WeakValueDictionary.pop(self, key.lower(), def_val)
+        return super(CaselessWeakValueDict, self).pop( key.lower(), def_val)
 
     def __delitem__(self, k):
-        weakref.WeakValueDictionary.__delitem__(self, k.lower())
+        super(CaselessWeakValueDict, self).__delitem__( k.lower())
 
 
 # {{{ http://code.activestate.com/recipes/576642/ (r10)

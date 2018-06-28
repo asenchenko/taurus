@@ -448,7 +448,7 @@ class TaurusCommandButton(Qt.QPushButton, TaurusBaseWidget):
                            quotes will be removed and the quoted text will not
                            be splitted.
         '''
-        if isinstance(parameters, six,string_types + (Qt.QString,)):
+        if isinstance(parameters, six.string_types + (Qt.QString,)):
             parameters = str(parameters).strip()
             if parameters[0] in ('"', "'") and parameters[0] == parameters[-1]:
                 parameters = [parameters[1:-1]]

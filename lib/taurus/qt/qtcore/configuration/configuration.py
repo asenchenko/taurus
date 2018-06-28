@@ -352,7 +352,7 @@ class BaseConfigurableClass:
 
         .. seealso:: :meth:`registerConfigProperty`, :meth:`registerConfigDelegate`
         '''
-        if isinstance(item, basestring):
+        if isinstance(item, six.string_types):
             name = str(item)
         else:
             name = str(item.objectName())

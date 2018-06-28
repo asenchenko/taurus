@@ -39,6 +39,7 @@ import numpy
 from functools import partial
 
 from builtins import range
+from past.builtins import long
 
 from taurus import Manager
 from taurus.core.units import Quantity, UR

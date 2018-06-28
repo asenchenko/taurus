@@ -30,6 +30,7 @@ __all__ = ["TaurusLabel"]
 __docformat__ = 'restructuredtext'
 
 import operator
+import collections
 import re
 
 from past.builtins import unicode
@@ -346,7 +347,7 @@ class TaurusLabel(Qt.QLabel, TaurusBaseWidget):
                 return
             if type(mi_value) == int:
                 mi_value = mi_value,
-            if not operator.isSequenceType(mi_value):
+            if not isinstance(mi_value,collections.Sequence):
                 return
             self._modelIndex = mi_value
         self._modelIndexStr = mi
