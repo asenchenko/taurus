@@ -66,6 +66,10 @@ class STD(Logger):
         self.buffer = ''
         self.log_obj.propagate = False
         self.std = std
+    #Trying to mimic  stderr
+    @property
+    def errors(self):
+        return self.std.errors
 
     def addLogHandler(self, handler):
         """When called, set to use a private handler and DON'T send messages
