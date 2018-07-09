@@ -64,7 +64,7 @@ import collections
 import operator
 import types
 
-from six.moves.queue import Queue
+from queue import Queue
 
 from taurus import Manager
 from taurus.core import AttrQuality, DataType

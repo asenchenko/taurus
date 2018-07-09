@@ -41,7 +41,7 @@ __docformat__ = 'restructuredtext'
 import re
 import operator
 import traceback
-from six.moves.queue import Queue
+from queue import Queue
 from functools import partial
 
 from taurus.external.qt import Qt, QtGui, QtCore
