@@ -37,6 +37,7 @@ __all__ = ["LogIt", "TraceIt", "DebugIt", "InfoIt", "WarnIt", "ErrorIt",
 
 __docformat__ = "restructuredtext"
 
+import io
 import os
 import sys
 import logging.handlers
@@ -412,7 +413,8 @@ class LogExceptHook(BaseExceptHook):
 
 class _Logger(logging.Logger):
 
-    def findCaller(self):
+
+    def findCaller(self, stack_info=False):
         """
         Find the stack frame of the caller so that we can note the source
         file name, line number and function name.
@@ -422,14 +424,22 @@ class _Logger(logging.Logger):
         # IronPython isn't run with -X:Frames.
         if f is not None:
             f = f.f_back
-        rv = "(unknown file)", 0, "(unknown function)"
+        rv = "(unknown file)", 0, "(unknown function)", None
         while hasattr(f, "f_code"):
             co = f.f_code
             filename = os.path.normcase(co.co_filename)
             if filename in (_srcfile, logging._srcfile):
                 f = f.f_back
                 continue
-            rv = (co.co_filename, f.f_lineno, co.co_name)
+            if stack_info:
+                sio = io.StringIO()
+                sio.write('Stack (most recent call last):\n')
+                traceback.print_stack(f, file=sio)
+                sinfo = sio.getvalue()
+                if sinfo[-1] == '\n':
+                    sinfo = sinfo[:-1]
+                sio.close()
+            rv = (co.co_filename, f.f_lineno, co.co_name, stack_info)
             break
         return rv
 
@@ -888,7 +898,7 @@ class Logger(Object):
 
         if _callerinfo is None:
             _callerinfo = self.log_obj.findCaller()
-        filename, lineno, _ = _callerinfo
+        filename, lineno, fname, sinfo = _callerinfo
         depr_msg = warnings.formatwarning(
             msg, DeprecationWarning, filename, lineno)
         self.log_obj.warning(depr_msg, **kw)
