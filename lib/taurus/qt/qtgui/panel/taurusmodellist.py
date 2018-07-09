@@ -31,6 +31,8 @@ __all__ = ['TaurusModelModel', 'TaurusModelItem', 'TaurusModelList']
 
 import copy
 
+from future.utils import string_types
+
 from taurus.external.qt import Qt
 import taurus
 from taurus.core.taurushelper import getSchemeFromName
@@ -255,7 +257,7 @@ class TaurusModelModel(Qt.QAbstractListModel):
         for e in items:
             if isinstance(e, TaurusModelItem):
                 itemobjs.append(e)
-            elif isinstance(e, basestring):
+            elif isinstance(e, string_types):
                 itemobjs.append(TaurusModelItem(src=e))
             else:  # assuming it is a sequence of arguments that can be passed to the constructor of TaurusModelItem
                 itemobjs.append(TaurusModelItem(*e))

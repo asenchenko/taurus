@@ -34,6 +34,8 @@ import textwrap
 import collections
 import operator
 
+from future.utils import string_types
+
 from .enums import Alignment
 
 
@@ -62,7 +64,7 @@ class List(list):
             self.append(header)
 
     def setHeaderSeparator(self, header_separator):
-        if isinstance(header_separator, (str, unicode)):
+        if isinstance(header_separator, string_types):
             header_separator = self.col_nb * [header_separator]
         self.HeaderSeparator = header_separator
 
@@ -72,7 +74,7 @@ class List(list):
     header_separator = property(getHeaderSeparator, setHeaderSeparator)
 
     def setRowSeparator(self, row_separator):
-        if isinstance(row_separator, (str, unicode)):
+        if isinstance(row_separator, string_types):
             row_separator = self.col_nb * [row_separator]
         self.RowSeparator = row_separator
 

@@ -43,6 +43,8 @@ __docformat__ = 'restructuredtext'
 import os
 import xml.dom.minidom
 
+from future.utils import string_types
+
 from taurus.external.qt import Qt
 from taurus.core.taurushelper import getSchemeFromName
 from taurus.qt.qtcore.configuration import BaseConfigurableClass
@@ -69,7 +71,7 @@ class ExternalAppAction(Qt.QAction, BaseConfigurableClass):
         :param icon: (QIcon or any other object that can be passed to QIcon creator) see :class:`Qt.QAction`
         :param parent: (QObject) The parent object
         '''
-        if isinstance(cmdargs, (basestring, Qt.QString)):
+        if isinstance(cmdargs, string_types + (Qt.QString,)):
             import shlex
             cmdargs = shlex.split(str(cmdargs))
         self.path = os.path.realpath(cmdargs and cmdargs[0] or '')
@@ -77,7 +79,7 @@ class ExternalAppAction(Qt.QAction, BaseConfigurableClass):
             text = os.path.basename(cmdargs and cmdargs[0] or '')
         if icon is None:
             icon = Qt.QIcon.fromTheme(self.DEFAULT_ICON_NAME)
-        elif isinstance(icon, basestring):
+        elif isinstance(icon, string_types):
             tmp = Qt.QIcon.fromTheme(icon)
             if not tmp.isNull():
                 icon = tmp
@@ -101,7 +103,7 @@ class ExternalAppAction(Qt.QAction, BaseConfigurableClass):
                         application. It can also be a string containing a
                         command, which will be automatically converted to a list
         '''
-        if isinstance(cmdargs, (basestring, Qt.QString)):
+        if isinstance(cmdargs, string_types + (Qt.QString,)):
             import shlex
             cmdargs = shlex.split(str(cmdargs))
         self.__cmdargs = cmdargs
@@ -117,7 +119,7 @@ class ExternalAppAction(Qt.QAction, BaseConfigurableClass):
         import subprocess
         try:
             if args is not None:
-                if isinstance(args, (basestring, Qt.QString)):
+                if isinstance(args, string_types + (Qt.QString,)):
                     import shlex
                     args = shlex.split(str(args))
                 args = self.cmdArgs() + args

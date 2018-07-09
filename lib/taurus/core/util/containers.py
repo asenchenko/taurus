@@ -36,6 +36,8 @@ __all__ = ["CaselessList", "CaselessDict", "CaselessWeakValueDict", "LoopList",
 
 __docformat__ = "restructuredtext"
 
+from future.utils import string_types
+
 import copy
 import collections
 import time
@@ -60,7 +62,7 @@ class CaselessList(list):
     def __init__(self, inlist=[]):
         list.__init__(self)
         for entry in inlist:
-            if not isinstance(entry, basestring):
+            if not isinstance(entry, string_types):
                 raise TypeError('Members of this object must be strings. '
                                 'You supplied \"%s\" which is \"%s\"' %
                                 (entry, type(entry)))
@@ -74,7 +76,7 @@ class CaselessList(list):
     def findentry(self, item):
         """A caseless way of checking if an item is in the list or not.
         It returns None or the entry."""
-        if not isinstance(item, basestring):
+        if not isinstance(item, string_types):
             raise TypeError('Members of this object must be strings. '
                             'You supplied \"%s\"' % type(item))
         for entry in self:
@@ -111,7 +113,7 @@ class CaselessList(list):
 
     def append(self, item):
         """Adds an item to the list and checks it's a string."""
-        if not isinstance(item, basestring):
+        if not isinstance(item, string_types):
             raise TypeError('Members of this object must be strings. '
                             'You supplied \"%s\"' % type(item))
         list.append(self, item)
@@ -123,7 +125,7 @@ class CaselessList(list):
             raise TypeError('You can only extend lists with lists. '
                             'You supplied \"%s\"' % type(item))
         for entry in item:
-            if not isinstance(entry, basestring):
+            if not isinstance(entry, string_types):
                 raise TypeError('Members of this object must be strings. '
                                 'You supplied \"%s\"' % type(entry))
             list.append(self, entry)
@@ -131,7 +133,7 @@ class CaselessList(list):
     def count(self, item):
         """Counts references to 'item' in a caseless manner.
         If item is not a string it will always return 0."""
-        if not isinstance(item, basestring):
+        if not isinstance(item, string_types):
             return 0
         count = 0
         for entry in self:
@@ -150,7 +152,7 @@ class CaselessList(list):
             maxindex = len(self)
         minindex = max(0, minindex) - 1
         maxindex = min(len(self), maxindex)
-        if not isinstance(item, basestring):
+        if not isinstance(item, string_types):
             raise TypeError('Members of this object must be strings. '
                             'You supplied \"%s\"' % type(item))
         index = minindex
@@ -163,7 +165,7 @@ class CaselessList(list):
     def insert(self, i, x):
         """s.insert(i, x) same as s[i:i] = [x]
         Raises TypeError if x isn't a string."""
-        if not isinstance(x, basestring):
+        if not isinstance(x, string_types):
             raise TypeError('Members of this object must be strings. '
                             'You supplied \"%s\"' % type(x))
         list.insert(self, i, x)
@@ -177,7 +179,7 @@ class CaselessList(list):
         the same length as the slice object requires.
         """
         if isinstance(index, int):
-            if not isinstance(value, basestring):
+            if not isinstance(value, string_types):
                 raise TypeError('Members of this object must be strings. '
                                 'You supplied \"%s\"' % type(value))
             list.__setitem__(self, index, value)
@@ -186,7 +188,7 @@ class CaselessList(list):
                 raise TypeError(
                     'Value given to set slice is not a sequence object.')
             for entry in value:
-                if not isinstance(entry, basestring):
+                if not isinstance(entry, string_types):
                     raise TypeError('Members of this object must be strings. '
                                     'You supplied \"%s\"' % type(entry))
             list.__setitem__(self, index, value)
@@ -196,7 +198,7 @@ class CaselessList(list):
     def __setslice__(self, i, j, sequence):
         """Called to implement assignment to self[i:j]."""
         for entry in sequence:
-            if not isinstance(entry, basestring):
+            if not isinstance(entry, string_types):
                 raise TypeError('Members of this object must be strings. '
                                 'You supplied \"%s\"' % type(entry))
         list.__setslice__(self, i, j, sequence)

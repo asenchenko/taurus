@@ -36,6 +36,7 @@ import copy
 import weakref
 import inspect
 
+from future.utils import string_types
 from lxml import etree
 
 import taurus
@@ -1119,7 +1120,7 @@ class TaurusGui(TaurusMainWindow):
 
         # Synoptics
         SYNOPTIC = getattr(conf, 'SYNOPTIC', None)
-        if isinstance(SYNOPTIC, basestring):  # old config file style
+        if isinstance(SYNOPTIC, string_types):  # old config file style
             self.warning(
                 'Deprecated usage of SYNOPTIC keyword (now it expects a list of paths). Please update your configuration file to: "SYNOPTIC=[\'%s\']".' % SYNOPTIC)
             SYNOPTIC = [SYNOPTIC]

@@ -33,6 +33,8 @@ import traceback
 from functools import partial
 from collections import Iterable
 
+from future.utils import string_types
+
 import taurus
 from taurus.external.qt import Qt
 from taurus.core.util.log import Logger
@@ -46,7 +48,7 @@ from taurus.core.taurusbasetypes import SubscriptionState
 
 
 def isString(seq):
-    if isinstance(seq, basestring):
+    if isinstance(seq, string_types):
         return True  # It matches most python str-like classes
     if any(s in str(type(seq)).lower() for s in ('vector', 'array', 'list',)):
         return False

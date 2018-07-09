@@ -32,6 +32,9 @@ __docformat__ = 'restructuredtext'
 
 import os
 import traceback
+
+from future.utils import string_types
+
 import taurus
 from taurus.external.qt import Qt
 from taurus.core.taurusbasetypes import TaurusElementType
@@ -441,7 +444,7 @@ class TaurusJDrawSynopticsView(Qt.QGraphicsView, TaurusBaseWidget):
     model = Qt.pyqtProperty("QString", getModel, setModel)
 
     def setSelectionStyle(self, selectionStyle):
-        if isinstance(selectionStyle, (Qt.QString, basestring)):
+        if isinstance(selectionStyle, (Qt.QString, string_types)):
             selectionStyle = str(selectionStyle).upper()
             try:
                 selectionStyle = SynopticSelectionStyle[selectionStyle]
