@@ -61,7 +61,18 @@ class TaurusModelItem(object):
         self.setSrc(src)
         if display is not None:
             self.display = display
-
+    
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        result.icon = Qt.QIcon(self.icon)
+        result.ok = copy.deepcopy(self.ok)
+        result._src = copy.deepcopy(self._src)
+        result.display = copy.deepcopy(self.display)
+        print(self._src, self.display)
+        return result
+        
     def __repr__(self):
         ret = "TaurusModelItem('%s')" % (self.display)
         return ret
