@@ -986,6 +986,8 @@ class TaurusTrend(TaurusPlot):
         if self.isTimerNeeded(checkMinimized=False):
             self.debug('(re)starting the timer (in showEvent)')
             self._replotTimer.start()
+            # call a replot now (since it may not have been done while hidden)
+            self.doReplot()
 
     def hideEvent(self, event):
         '''reimplemented from :meth:`TaurusPlot.showEvent` so that
@@ -1163,7 +1165,9 @@ class TaurusTrend(TaurusPlot):
         try:
             # For it to work properly, 'names' must be a CaselessList, just as
             # self.trendSets is a CaselessDict
-            del_sets = [name for name in list(self.trendSets.keys())
+            if not isinstance(names, CaselessList):
+                names = CaselessList(names)
+            del_sets = [name for name in self.trendSets.keys()
                         if name not in names]
 
             # if all trends were removed, reset the color palette
