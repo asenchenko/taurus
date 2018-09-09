@@ -28,7 +28,6 @@
 should inherit to be considered valid taurus widgets."""
 
 from builtins import str
-from past.builtins import basestring
 __all__ = ["TaurusBaseComponent", "TaurusBaseWidget",
            "TaurusBaseWritableWidget", "defaultFormatter"]
 

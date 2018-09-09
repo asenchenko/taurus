@@ -28,7 +28,6 @@ TaurusDevicePanel.py:
 """
 
 from builtins import str
-from past.builtins import basestring
 __all__ = ["TaurusDevicePanel", "TaurusDevPanel"]
 
 __docformat__ = 'restructuredtext'

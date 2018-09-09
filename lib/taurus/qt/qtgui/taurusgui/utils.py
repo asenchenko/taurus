@@ -27,7 +27,6 @@
 by specific TaurusGui-based GUIs"""
 
 from builtins import str
-from past.builtins import basestring
 from builtins import object
 __docformat__ = 'restructuredtext'
 

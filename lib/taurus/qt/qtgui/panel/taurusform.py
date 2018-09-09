@@ -30,7 +30,6 @@ from __future__ import absolute_import
 from builtins import zip
 from builtins import filter
 from builtins import str
-from past.builtins import basestring
 __all__ = ["TaurusAttrForm", "TaurusCommandsForm", "TaurusForm"]
 
 __docformat__ = 'restructuredtext'

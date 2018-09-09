@@ -26,7 +26,6 @@
 """This package provides the TaurusGui class"""
 
 from builtins import str
-from past.builtins import basestring
 __all__ = ["DockWidgetPanel", "TaurusGui"]
 
 __docformat__ = 'restructuredtext'

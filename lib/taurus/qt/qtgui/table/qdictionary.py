@@ -28,7 +28,6 @@ from __future__ import print_function
 
 from builtins import str
 from builtins import range
-from past.builtins import basestring
 __all__ = ["QDictionaryEditor", "QListEditor"]
 
 __docformat__ = 'restructuredtext'

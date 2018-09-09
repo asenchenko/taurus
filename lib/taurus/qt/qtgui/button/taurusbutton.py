@@ -29,7 +29,6 @@ from __future__ import print_function
 
 from builtins import map
 from builtins import str
-from past.builtins import basestring
 __all__ = ["TaurusLauncherButton", "TaurusCommandButton", "TaurusLockButton"]
 
 __docformat__ = 'restructuredtext'

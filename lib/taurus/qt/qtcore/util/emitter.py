@@ -34,7 +34,6 @@ standard_library.install_aliases()
 from builtins import next
 from builtins import str
 from builtins import map
-from past.builtins import basestring
 from past.utils import old_div
 from builtins import object
 from queue import Queue, Empty

@@ -32,7 +32,6 @@ from __future__ import print_function
 from builtins import zip
 from builtins import str
 from builtins import range
-from past.builtins import basestring
 from builtins import object
 __all__ = ["CaselessList", "CaselessDict", "CaselessWeakValueDict", "LoopList",
            "CircBuf", "LIFO", "TimedQueue", "self_locked", "ThreadDict",

@@ -37,7 +37,6 @@ from __future__ import print_function
 from builtins import next
 from builtins import str
 from builtins import range
-from past.builtins import basestring
 from builtins import object
 __all__ = ["TaurusDevTree", "TaurusSearchTree", "TaurusDevTreeOptions"]
 
