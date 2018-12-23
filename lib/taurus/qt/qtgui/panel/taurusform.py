@@ -24,15 +24,9 @@
 #############################################################################
 
 """This module contains taurus Qt form widgets"""
+
 from __future__ import print_function
 from __future__ import absolute_import
-
-from builtins import zip
-from builtins import filter
-from builtins import str
-__all__ = ["TaurusAttrForm", "TaurusCommandsForm", "TaurusForm"]
-
-__docformat__ = 'restructuredtext'
 
 from datetime import datetime
 
@@ -48,6 +42,10 @@ from taurus.qt.qtcore.mimetypes import (TAURUS_ATTR_MIME_TYPE, TAURUS_DEV_MIME_T
 from taurus.qt.qtgui.container import TaurusWidget, TaurusScrollArea
 from taurus.qt.qtgui.button import QButtonBox, TaurusCommandButton
 from .taurusmodelchooser import TaurusModelChooser
+
+__all__ = ["TaurusAttrForm", "TaurusCommandsForm", "TaurusForm"]
+
+__docformat__ = 'restructuredtext'
 
 
 def _normalize_model_name_case(modelname):
@@ -393,7 +391,7 @@ class TaurusForm(TaurusWidget):
         format = TaurusWidget.onSetFormatter(self)
         if format is not None:
             for item in self.getItems():
-                rw = item.readWidget()
+                rw = item.readWidget(followCompact=True)
                 if hasattr(rw, 'setFormat'):
                     rw.setFormat(format)
         return format
@@ -404,9 +402,8 @@ class TaurusForm(TaurusWidget):
         """
         TaurusWidget.setFormat(self, format)
         for item in self.getItems():
-            rw = item.readWidget()
-            if hasattr(rw, 'setFormat'):
-                rw.setFormat(format)
+            if hasattr(item, 'setFormat'):
+                item.setFormat(format)
 
     def setCompact(self, compact):
         self._compact = compact
@@ -773,7 +770,7 @@ class TaurusCommandsForm(TaurusWidget):
 
         '''
         self._defaultParameters = dict((k.lower(), v)
-                                       for k, v in list(params.items()))
+                                       for k, v in params.items())
         self._updateCommandWidgets()
 
     def setViewFilters(self, filterlist):

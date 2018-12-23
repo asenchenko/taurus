@@ -102,9 +102,8 @@ Finally, the TangoFactory object can be accessed as::
           This syntax is now deprecated and should not be used. Taurus will
           issue warnings if detected.
 """
-from __future__ import absolute_import
 
-__docformat__ = "restructuredtext"
+from __future__ import absolute_import
 
 from .enums import *
 from .tangodatabase import *
@@ -112,3 +111,6 @@ from .tangodevice import *
 from .tangofactory import *
 from .tangoattribute import *
 from .tangoconfiguration import *
+
+
+__docformat__ = "restructuredtext"

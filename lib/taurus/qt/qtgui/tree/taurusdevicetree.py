@@ -26,19 +26,16 @@
 """
 taurusdevicetree.py:
 """
-from __future__ import print_function
 
 # @todo: This module is not being used anywhere in Taurus and depends on
 # non-standard and non-provided modules. It is also quite specific and
 # tango-centric, so it should be removed from Taurus or merged with
 # Taurusdbtree
 
-# ,"SearchEdit"] #"TaurusTreeNode"]
+from __future__ import print_function
+
 from builtins import next
-from builtins import str
-from builtins import range
 from builtins import object
-__all__ = ["TaurusDevTree", "TaurusSearchTree", "TaurusDevTreeOptions"]
 
 import time
 import os
@@ -75,6 +72,8 @@ from taurus.qt.qtcore.util.properties import djoin
 from taurus.qt.qtgui.base import TaurusBaseComponent, TaurusBaseWidget
 from taurus.qt.qtgui.container import TaurusWidget
 
+
+__all__ = ["TaurusDevTree", "TaurusSearchTree", "TaurusDevTreeOptions"]
 TREE_ITEM_MIME_TYPE = 'application/x-qabstractitemmodeldatalist'
 
 ###############################################################################
@@ -200,22 +199,22 @@ class TaurusTreeNodeContainer(object):
             node = self.getNode()
         try:
             name, url = self.getNodeText(node), ''
-            for k, v in list(self.getIconMap().items()):
+            for k, v in self.getIconMap().items():
                 if re.match(k.lower(), name.lower()):
                     url = v
             if not url:
-                for k, v in list(self.getIconMap().items()):
+                for k, v in self.getIconMap().items():
                     if k.lower() in name.lower():
                         url = v
             # if name.count('/')==2:
-                # if any(a.startswith(name+'/') for a in getArchivedAttributes()):
-                    #url = wdir('image/icons/clock.png')
-                # else:
-                    #url = wdir('image/equips/icon-%s.gif'%name.split('/')[2].split('-')[0].lower())
-            # elif name.count('/')==3:
-                #url = filterAttributes(name) or wdir('image/icons/closetab.png')
+            # if any(a.startswith(name+'/') for a in getArchivedAttributes()):
+            #url = wdir('image/icons/clock.png')
             # else:
-                #url = wdir('image/equips/icon-%s.gif'%name.lower())
+            #url = wdir('image/equips/icon-%s.gif'%name.split('/')[2].split('-')[0].lower())
+            # elif name.count('/')==3:
+            #url = filterAttributes(name) or wdir('image/icons/closetab.png')
+            # else:
+            #url = wdir('image/equips/icon-%s.gif'%name.lower())
         except:
             self.warning(traceback.format_exc())
         if not url or not os.path.isfile(url):
@@ -646,7 +645,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
                 dct = self.getTangoDict(filters)
             else:  # if isMap(filters):
                 self.setWindowTitle('TaurusDevTree:%s' %
-                                    ','.join(list(filters)))
+                                    ','.join(filters))
 
                 def expand_dict(d):
                     return [x for v in d.values() for x in (expand_dict(v) if hasattr(v, 'values') else (v,))]
@@ -657,7 +656,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
                     return dict.fromkeys(t for t in targets if matchCl(f, t))
 
                 def expand_filter(f):
-                    return dict((k, expand_filter(v) if hasattr(v, 'values') else get_devs(v)) for k, v in list(f.items()) if v)
+                    return dict((k, expand_filter(v) if hasattr(v, 'values') else get_devs(v)) for k, v in f.items() if v)
                 dct = expand_filter(filters)
             # self.Loader.next([self.setTree,dct,True])
             self.setTree(dct, clear=True)
@@ -806,7 +805,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
                 if alias:
                     self.trace('Got aliases for %s: %s' % (aname, alias))
                     [setattr(natt, 'AttributeAlias', v)
-                     for k, v in list(alias.items()) if k in aname.lower()]
+                     for k, v in alias.items() if k in aname.lower()]
                 else:
                     natt.AttributeAlias = aname.split()[0].strip()
         node.setExpanded(True)
@@ -875,9 +874,8 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
     def unpackChildren(self):
         """ removes all nodes from the tree and returns them in a list, used for resorting """
         allChildren = []
-        nodes = list(self.getAllNodes().values())
 
-        for node in nodes:
+        for node in self.getAllNodes().values():
             allChildren.extend(node.takeChildren())
         while self.topLevelItemCount():
             allChildren.append(self.takeTopLevelItem(0))
@@ -1013,7 +1011,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
                          for item in self.item_list if item.isExpanded()]
                 self.debug('findInTree(%s): Node not found' % (regexp))
             if queue:
-                next(self.Expander)
+                self.Expander.next()
         except:
             self.warning('findInTree(%s): failed' % (regexp))
             self.error(traceback.format_exc())
@@ -1027,7 +1025,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
 
         sorter = lambda k, ks=[re.compile(c) for c in order]: str(
             next((i for i, r in enumerate(ks) if r.match(k.lower())))) + str(k)
-        for c, it in sorted(list(allChildren.items()), key=lambda k: sorter(k[0])):
+        for c, it in sorted(allChildren.items(), key=lambda k: sorter(k[0])):
             self.debug('tree.sortCustom(%s): %s inserted at %d' %
                        (order, it.text(0), self.topLevelItemCount()))
             self.insertTopLevelItem(self.topLevelItemCount(), it)
@@ -1073,7 +1071,7 @@ class TaurusDevTree(TaurusTreeNodeContainer, Qt.QTreeWidget, TaurusBaseWidget):
             if node.isHidden():
                 continue
             if regexps:
-                matches = [v for k, v in list(dct.items()) if re.match(
+                matches = [v for k, v in dct.items() if re.match(
                     k.lower(), name.lower())]
                 if matches:
                     update_node(node, name, {name: matches[0]})
@@ -1666,7 +1664,7 @@ class TaurusSearchTree(TaurusWidget):
         self.layout().addWidget(self.tree)
         self.registerConfigDelegate(self.tree)
         # Slot forwarding ...
-        for k in list(TaurusDevTree.__dict__.keys()):
+        for k in TaurusDevTree.__dict__:
             # if k in ['__init__','defineStyle']: continue
             if k not in self.__slots__:
                 continue

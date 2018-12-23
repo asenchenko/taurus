@@ -26,9 +26,6 @@
 """This module defines the TangoDevice object"""
 
 from builtins import object
-__all__ = ["TangoDevice"]
-
-__docformat__ = "restructuredtext"
 
 import time
 from PyTango import (DeviceProxy, DevFailed, LockerInfo, DevState)
@@ -39,14 +36,20 @@ from taurus.core.taurusbasetypes import (TaurusDevState, TaurusLockInfo,
 from taurus.core.util.log import taurus4_deprecation
 
 
-class _TangoInfo(object):
+__all__ = ["TangoDevice"]
 
-    def __init__(self):
-        self.dev_class = self.dev_type = 'TangoDevice'
-        self.doc_url = 'http://www.esrf.fr/computing/cs/tango/tango_doc/ds_doc/'
-        self.server_host = 'Unknown'
-        self.server_id = 'Unknown'
-        self.server_version = 1
+__docformat__ = "restructuredtext"
+
+
+class _TangoInfo(object):
+    pass
+
+def __init__(self):
+    self.dev_class = self.dev_type = 'TangoDevice'
+    self.doc_url = 'http://www.esrf.fr/computing/cs/tango/tango_doc/ds_doc/'
+    self.server_host = 'Unknown'
+    self.server_id = 'Unknown'
+    self.server_version = 1
 
 
 class TangoDevice(TaurusDevice):
@@ -169,9 +172,11 @@ class TangoDevice(TaurusDevice):
             rvalue of the returned TangoAttributeValue is now a member of
             TaurusDevState instead of TaurusSWDevState
         """
+        if not cache:
+            self.warning('Ignoring argument `cache=False`to getValueObj()')
         from taurus.core.tango.tangoattribute import TangoAttrValue
         ret = TangoAttrValue()
-        ret.rvalue = self.state(cache)
+        ret.rvalue = self.state
         return ret
 
     def getDisplayDescrObj(self, cache=True):

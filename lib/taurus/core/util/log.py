@@ -30,14 +30,6 @@ from __future__ import absolute_import
 
 from builtins import str
 from builtins import object
-__all__ = ["LogIt", "TraceIt", "DebugIt", "InfoIt", "WarnIt", "ErrorIt",
-           "CriticalIt", "MemoryLogHandler", "LogExceptHook", "Logger",
-           "LogFilter",
-           "_log", "trace", "debug", "info", "warning", "error", "fatal",
-           "critical", "deprecated", "deprecation_decorator",
-           "taurus4_deprecation"]
-
-__docformat__ = "restructuredtext"
 
 import io
 import os
@@ -59,6 +51,16 @@ from .excepthook import BaseExceptHook
 from collections import defaultdict
 
 
+__all__ = ["LogIt", "TraceIt", "DebugIt", "InfoIt", "WarnIt", "ErrorIt",
+           "CriticalIt", "MemoryLogHandler", "LogExceptHook", "Logger",
+           "LogFilter",
+           "_log", "trace", "debug", "info", "warning", "error", "fatal",
+           "critical", "deprecated", "deprecation_decorator",
+           "taurus4_deprecation"]
+
+__docformat__ = "restructuredtext"
+
+
 class _DeprecationCounter(defaultdict):
 
     def __init__(self):
@@ -72,8 +74,7 @@ class _DeprecationCounter(defaultdict):
 
     def pretty(self):
         from operator import itemgetter
-        sorted_items = sorted(
-            iter(self.items()), key=itemgetter(1), reverse=True)
+        sorted_items = sorted(self.items(), key=itemgetter(1), reverse=True)
         ret = '\n'.join(['\t%d * "%s"' % (v, k) for k, v in sorted_items])
         return "< Deprecation Counts (%d):\n%s >" % (self.getTotal(), ret)
 
@@ -797,7 +798,7 @@ class Logger(Object):
                     out += '\n\t  -> line = [%d]: %s' % (line, lines[0])
             if frame:
                 out += '\n\t   locals = '
-                for k, v in list(frame.f_locals.items()):
+                for k, v in frame.f_locals.items():
                     out += '\n\t\t%20s = ' % k
                     try:
                         cut = False
@@ -901,7 +902,7 @@ class Logger(Object):
                 return
         if _callerinfo is None:
             _callerinfo = self.log_obj.findCaller()
-        filename, lineno, fname  = _callerinfo[0], _callerinfo[1], _callerinfo[2]
+        filename, lineno = _callerinfo[:2]
         depr_msg = warnings.formatwarning(
             msg, DeprecationWarning, filename, lineno)
         self.log_obj.warning(depr_msg, **kw)

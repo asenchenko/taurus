@@ -27,11 +27,13 @@
 from __future__ import print_function
 
 from builtins import str
+
+from taurus.external.qt import Qt
+
+
 __all__ = ["GraphicalChoiceDlg", "GraphicalChoiceWidget"]
 
 __docformat__ = 'restructuredtext'
-
-from taurus.external.qt import Qt
 
 
 class GraphicalChoiceDlg(Qt.QDialog):
@@ -121,7 +123,7 @@ class GraphicalChoiceDlg(Qt.QDialog):
 class GraphicalChoiceWidget(Qt.QScrollArea):
     '''A widget that presents a 2D grid of buttons'''
 
-    choiceMade = Qt.pyqtSignal(str)
+    choiceMade = Qt.pyqtSignal('QString')
 
     def __init__(self, parent=None, designMode=False, choices=None, pixmaps=None, iconSize=128,
                  defaultPixmap=None, horizontalScrollBarPolicy=Qt.Qt.ScrollBarAsNeeded,

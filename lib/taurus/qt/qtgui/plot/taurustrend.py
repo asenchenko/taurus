@@ -26,12 +26,9 @@
 """
 taurustrend.py: Generic trend widget for Taurus
 """
+
 from __future__ import print_function
-from __future__ import division
-from builtins import zip
 from builtins import str
-from builtins import range
-__all__ = ["ScanTrendsSet", "TaurusTrend", "TaurusTrendsSet"]
 
 from datetime import datetime
 import time
@@ -46,6 +43,9 @@ from taurus.core.taurusattribute import TaurusAttribute
 from taurus.core.util.containers import CaselessDict, CaselessList, ArrayBuffer
 from taurus.qt.qtgui.base import TaurusBaseComponent
 from taurus.qt.qtgui.plot import TaurusPlot
+
+
+__all__ = ["ScanTrendsSet", "TaurusTrend", "TaurusTrendsSet"]
 
 
 def getArchivedTrendValues(*args, **kwargs):

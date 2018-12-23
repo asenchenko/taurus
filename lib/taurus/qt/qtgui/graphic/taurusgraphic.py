@@ -26,7 +26,6 @@
 taurusgraphic.py:
 """
 from __future__ import print_function
-from __future__ import division
 
 # TODO: Tango-centric
 
@@ -35,7 +34,29 @@ standard_library.install_aliases()
 from builtins import str
 from builtins import range
 from builtins import object
-from past.utils import old_div
+
+import re
+import os
+import subprocess
+import traceback
+import collections
+
+from future.utils import string_types
+from queue import Queue
+
+from taurus import Manager
+from taurus.core import AttrQuality, DataType
+from taurus.core.util.containers import CaselessDefaultDict
+from taurus.core.util.log import Logger, deprecation_decorator
+from taurus.core.taurusdevice import TaurusDevice
+from taurus.core.taurusattribute import TaurusAttribute
+from taurus.core.util.enumeration import Enumeration
+from taurus.external.qt import Qt
+from taurus.qt.qtgui.base import TaurusBaseComponent
+from taurus.qt.qtgui.util import (QT_ATTRIBUTE_QUALITY_PALETTE, QT_DEVICE_STATE_PALETTE,
+                                  ExternalAppAction, TaurusWidgetFactory)
+
+
 __all__ = ['SynopticSelectionStyle',
            'parseTangoUri',
            'QEmitter',  # TODO: QEmitter should probably be removed (kept priv)
@@ -62,29 +83,6 @@ __all__ = ['SynopticSelectionStyle',
            ]
 
 __docformat__ = 'restructuredtext'
-
-import re
-import os
-import subprocess
-import traceback
-import collections
-import operator
-import types
-
-from future.utils import string_types
-from queue import Queue
-
-from taurus import Manager
-from taurus.core import AttrQuality, DataType
-from taurus.core.util.containers import CaselessDefaultDict
-from taurus.core.util.log import Logger, deprecation_decorator
-from taurus.core.taurusdevice import TaurusDevice
-from taurus.core.taurusattribute import TaurusAttribute
-from taurus.core.util.enumeration import Enumeration
-from taurus.external.qt import Qt
-from taurus.qt.qtgui.base import TaurusBaseComponent
-from taurus.qt.qtgui.util import (QT_ATTRIBUTE_QUALITY_PALETTE, QT_DEVICE_STATE_PALETTE,
-                                  ExternalAppAction, TaurusWidgetFactory)
 
 
 SynopticSelectionStyle = Enumeration("SynopticSelectionStyle", [
@@ -229,7 +227,7 @@ class TaurusGraphicsScene(Qt.QGraphicsScene):
         try:
             if parent and parent.panelClass() is not None:
                 defaultClass = parent.panelClass()
-                if defaultClass and isinstance(defaultClass, str):
+                if defaultClass and isinstance(defaultClass, string_types):
                     self.panel_launcher = self.getClass(defaultClass)
                     if self.panel_launcher is None:
                         self.panel_launcher = ExternalAppAction(
@@ -270,7 +268,7 @@ class TaurusGraphicsScene(Qt.QGraphicsScene):
                 clName.actionTriggered(clParam if isinstance(
                     clParam, (list, tuple)) else [clParam])
             else:
-                if isinstance(clName, str):
+                if isinstance(clName, string_types):
                     klass = self.getClass(clName)
                     if klass is None:
                         self.warning("%s Class not found!" % clName)
@@ -698,7 +696,7 @@ class TaurusGraphicsScene(Qt.QGraphicsScene):
                 else:
                     if isinstance(picture, Qt.QPixmap):
                         pixmap = picture
-                    elif isinstance(picture, string_types) or isinstance(picture, Qt.QString):
+                    elif isinstance(picture, string_types + (Qt.QString,)):
                         picture = str(picture)
                         pixmap = Qt.QPixmap(os.path.realpath(picture))
                     SelectionMark = Qt.QGraphicsPixmapItem()
@@ -742,8 +740,8 @@ class TaurusGraphicsScene(Qt.QGraphicsScene):
                 if w > MAX_CIRCLE_SIZE[0] or h > MAX_CIRCLE_SIZE[1]:
                     # Applying correction if the file is too big, half max
                     # circle size around the center
-                    x, y = (x + old_div(w, 2.)) - .5 * \
-                        MAX_CIRCLE_SIZE[0], (y + old_div(h, 2.)) - .5 * \
+                    x, y = (x + w / 2.) - .5 * \
+                        MAX_CIRCLE_SIZE[0], (y + h / 2.) - .5 * \
                         MAX_CIRCLE_SIZE[1],
                     w, h = [.5 * t for t in MAX_CIRCLE_SIZE]
                 else:
@@ -1514,7 +1512,7 @@ class TaurusBaseGraphicsFactory(object):
     def getGraphicsItem(self, type_, params):
         name = params.get(self.getNameParam())
         # applying alias
-        for k, v in list(getattr(self, 'alias', {}).items()):
+        for k, v in getattr(self, 'alias', {}).items():
             if k in name:
                 name = str(name).replace(k, v)
                 params[self.getNameParam()] = name

@@ -24,16 +24,16 @@
 #############################################################################
 
 """This module provides basic taurus container widgets"""
+
 from __future__ import absolute_import
 
-from builtins import map
+from taurus.external.qt import Qt
+from .taurusbasecontainer import TaurusBaseContainer
+
+
 __all__ = ["TaurusFrame"]
 
 __docformat__ = 'restructuredtext'
-
-from taurus.external.qt import Qt
-from taurus.qt.qtgui.base import TaurusBaseComponent
-from .taurusbasecontainer import TaurusBaseContainer
 
 
 class TaurusFrame(Qt.QFrame, TaurusBaseContainer):
@@ -148,7 +148,7 @@ def main():
     if len(args) == 0:
         w = demo()
     else:
-        models = list(map(str.lower, args))
+        models = map(str.lower, args)
 
         w = Qt.QWidget()
         w.setWindowTitle(app.applicationName())

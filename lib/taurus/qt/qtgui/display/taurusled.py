@@ -27,16 +27,11 @@
 """This module provides a set of basic Taurus widgets based on QLed"""
 from __future__ import absolute_import
 
-from builtins import map
 from builtins import str
 from builtins import object
-__all__ = ["TaurusLed"]
-
-__docformat__ = 'restructuredtext'
 
 import weakref
 import collections
-import operator
 
 from taurus.external.qt import Qt
 
@@ -44,6 +39,11 @@ from taurus.core import DataFormat, AttrQuality, DataType
 
 from taurus.qt.qtgui.base import TaurusBaseWidget
 from .qled import QLed
+
+
+__all__ = ["TaurusLed"]
+
+__docformat__ = 'restructuredtext'
 
 _QT_PLUGIN_INFO = {
     'module': 'taurus.qt.qtgui.display',
@@ -453,8 +453,8 @@ class TaurusLed(QLed, TaurusBaseWidget):
 
 def demo():
     "Led"
-    from . import demo
-    return demo.taurusleddemo.main()
+    from .demo import taurusleddemo
+    return taurusleddemo.main()
 
 
 def main():
@@ -478,7 +478,7 @@ def main():
     if len(args) == 0:
         w = demo()
     else:
-        models = list(map(str.lower, args))
+        models = map(str.lower, args)
 
         w = Qt.QWidget()
         layout = Qt.QGridLayout()

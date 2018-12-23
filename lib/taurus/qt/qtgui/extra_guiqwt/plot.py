@@ -28,7 +28,6 @@ Extension of :mod:`guiqwt.plot`
 """
 from builtins import next
 from builtins import str
-__all__ = ["TaurusCurveDialog", "TaurusTrendDialog", "TaurusImageDialog"]
 
 import copy
 
@@ -45,6 +44,9 @@ from taurus.qt.qtgui.extra_guiqwt.builder import make
 from taurus.qt.qtgui.extra_guiqwt.curve import TaurusCurveItem, TaurusTrendParam, TaurusTrendItem
 
 
+__all__ = ["TaurusCurveDialog", "TaurusTrendDialog", "TaurusImageDialog"]
+
+
 class TaurusCurveDialog(CurveDialog, TaurusBaseWidget):
     '''A taurus dialog for showing 1D data.
     It behaves as a regular :class:`guiqwt.plot.CurveDialog` but it also offers
@@ -54,7 +56,7 @@ class TaurusCurveDialog(CurveDialog, TaurusBaseWidget):
     .. seealso:: :class:`TaurusCurveWidget`
     '''
     _modifiableByUser = True
-    modelChanged = Qt.pyqtSignal([], ['QStringList'], [str])
+    modelChanged = Qt.pyqtSignal([], ['QStringList'], ['QString'])
 
     def __init__(self, parent=None, designMode=False, toolbar=True, **kwargs):
         '''see :class:`guiqwt.plot.CurveDialog` for other valid initialization parameters'''
@@ -201,7 +203,7 @@ class TaurusTrendDialog(CurveDialog, TaurusBaseWidget):
     '''
     _modifiableByUser = True
 
-    modelChanged = Qt.pyqtSignal([], ['QStringList'], [str])
+    modelChanged = Qt.pyqtSignal([], ['QStringList'], ['QString'])
 
     def __init__(self, parent=None, designMode=False, taurusparam=None, toolbar=True, **kwargs):
         '''see :class:`guiqwt.plot.CurveDialog` for other valid initialization parameters'''

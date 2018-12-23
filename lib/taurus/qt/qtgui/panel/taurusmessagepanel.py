@@ -27,12 +27,7 @@
 
 from future import standard_library
 standard_library.install_aliases()
-from builtins import str
 from builtins import object
-__all__ = ["TaurusMessagePanel", "TaurusMessageErrorHandler",
-           "TangoMessageErrorHandler", "MacroServerMessageErrorHandler"]
-
-__docformat__ = 'restructuredtext'
 
 import sys
 import traceback
@@ -49,6 +44,12 @@ except:
 from taurus.core.util.report import TaurusMessageReportHandler
 from taurus.external.qt import Qt
 from taurus.qt.qtgui.util.ui import UILoadable
+
+
+__all__ = ["TaurusMessagePanel", "TaurusMessageErrorHandler",
+           "TangoMessageErrorHandler", "MacroServerMessageErrorHandler"]
+
+__docformat__ = 'restructuredtext'
 
 
 class TaurusMessageErrorHandler(object):
@@ -282,7 +283,7 @@ class TaurusMessagePanel(Qt.QWidget):
     def _initReportCombo(self):
         report_handlers = get_report_handlers()
         combo = self.reportComboBox()
-        for name, report_handler in list(report_handlers.items()):
+        for name, report_handler in report_handlers.items():
             name = Qt.QVariant(name)
             combo.addItem(report_handler.Label, name)
 
@@ -508,7 +509,7 @@ class TaurusMessagePanel(Qt.QWidget):
         :return: a message box error handler
         :rtype: TaurusMessageBoxErrorHandler class object"""
 
-        for exc, h_klass in list(klass.ErrorHandlers.items()):
+        for exc, h_klass in klass.ErrorHandlers.items():
             if issubclass(err_type, exc):
                 return h_klass
         return TaurusMessageErrorHandler
@@ -593,7 +594,14 @@ def py_tg_serv_exc():
     except PyTango.DevFailed as df1:
         try:
             import traceback
-            import io
+            # ---------------------------------------------------------------
+            # workaround for unicode issues on py2 when using io instead of
+            # StringIO
+            try:
+                import StringIO as io  # py2
+            except ImportError:
+                import io  # py3
+            # ----------------------------------------------------------------
             origin = io.StringIO()
             traceback.print_stack(file=origin)
             origin.seek(0)

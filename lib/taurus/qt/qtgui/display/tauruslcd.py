@@ -24,17 +24,13 @@
 #############################################################################
 
 """This module provides a Taurus widget based on QLCDNumber"""
+
 from __future__ import absolute_import
 
-from builtins import map
 from builtins import str
 from builtins import object
-__all__ = ["TaurusLCD"]
-
-__docformat__ = 'restructuredtext'
 
 import collections
-import operator
 
 from taurus.core.taurusbasetypes import (TaurusElementType, TaurusEventType,
                                          AttrQuality, TaurusDevState)
@@ -44,6 +40,11 @@ from taurus.qt.qtgui.base import TaurusBaseController
 from taurus.qt.qtgui.base import TaurusScalarAttributeControllerHelper
 from taurus.qt.qtgui.base import TaurusConfigurationControllerHelper
 from taurus.qt.qtgui.base import updateLabelBackground
+
+
+__all__ = ["TaurusLCD"]
+
+__docformat__ = 'restructuredtext'
 
 _QT_PLUGIN_INFO = {
     'module': 'taurus.qt.qtgui.display',
@@ -388,8 +389,8 @@ class TaurusLCD(Qt.QLCDNumber, TaurusBaseWidget):
 
 def demo():
     "LCD"
-    from . import demo
-    return demo.tauruslcddemo.main()
+    from .demo import tauruslcddemo
+    return tauruslcddemo.main()
 
 
 def main():
@@ -413,7 +414,7 @@ def main():
     if len(args) == 0:
         w = demo()
     else:
-        models = list(map(str.lower, args))
+        models = map(str.lower, args)
 
         w = Qt.QWidget()
         layout = Qt.QGridLayout()

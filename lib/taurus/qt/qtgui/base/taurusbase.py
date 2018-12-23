@@ -27,17 +27,12 @@
 """This module provides the set of base classes from which the Qt taurus widgets
 should inherit to be considered valid taurus widgets."""
 
-from builtins import str
-__all__ = ["TaurusBaseComponent", "TaurusBaseWidget",
-           "TaurusBaseWritableWidget", "defaultFormatter"]
-
-__docformat__ = 'restructuredtext'
-
 import sys
 import threading
 from types import MethodType
-
+from future.builtins import str
 from future.utils import string_types
+
 from taurus.external.qt import Qt
 from enum import Enum
 
@@ -47,18 +42,26 @@ from taurus.core.util.timer import Timer
 from taurus.core.taurusbasetypes import TaurusElementType, TaurusEventType
 from taurus.core.taurusattribute import TaurusAttribute
 from taurus.core.taurusdevice import TaurusDevice
-from taurus.core.taurusconfiguration import (TaurusConfiguration,
-                                             TaurusConfigurationProxy)
+from taurus.core.taurusconfiguration import TaurusConfigurationProxy
 from taurus.core.tauruslistener import TaurusListener, TaurusExceptionListener
 from taurus.core.taurusoperation import WriteAttrOperation
 from taurus.core.util.eventfilters import filterEvent
 from taurus.core.util.log import deprecation_decorator
 from taurus.qt.qtcore.util.signal import baseSignal
 from taurus.qt.qtcore.configuration import BaseConfigurableClass
-from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE
+from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE
+from taurus.qt.qtcore.mimetypes import TAURUS_DEV_MIME_TYPE
+from taurus.qt.qtcore.mimetypes import TAURUS_MODEL_MIME_TYPE
 from taurus.qt.qtgui.util import ActionFactory
 
 from taurus.core.units import Quantity
+
+
+__all__ = ["TaurusBaseComponent", "TaurusBaseWidget",
+           "TaurusBaseWritableWidget", "defaultFormatter"]
+
+__docformat__ = 'restructuredtext'
+
 
 DefaultNoneValue = "-----"
 
@@ -2148,31 +2151,6 @@ class TaurusBaseWritableWidget(TaurusBaseWidget):
                 toolTip += '<hr/>Displayed value (%s) differs from applied value (%s)' % (
                     v_str, model_v_str)
             self.setToolTip(toolTip)
-
-    def _updateValidator(self, evt_value):  # TODO: Remove this method
-        # re-set the validator ranges if applicable
-        if evt_value is None:
-            return
-        v = self.validator()
-        if isinstance(v, Qt.QIntValidator):
-            bottom = evt_value.min_value
-            top = evt_value.max_value
-            bottom = int(
-                bottom) if bottom != TaurusConfiguration.no_min_value else -sys.maxsize
-            top = int(
-                top) if top != TaurusConfiguration.no_max_value else sys.maxsize
-            v.setRange(bottom, top)
-            self.debug("Validator range set to %i-%i" % (bottom, top))
-        elif isinstance(v, Qt.QDoubleValidator):
-            bottom = evt_value.min_value
-            top = evt_value.max_value
-            bottom = float(
-                bottom) if bottom != TaurusConfiguration.no_min_value else -float("inf")
-            top = float(
-                top) if top != TaurusConfiguration.no_max_value else float("inf")
-            v.setBottom(bottom)
-            v.setTop(top)
-            self.debug("Validator range set to %f-%f" % (bottom, top))
 
     @classmethod
     def getQtDesignerPluginInfo(cls):

@@ -27,19 +27,21 @@
 
 from future import standard_library
 standard_library.install_aliases()
-from builtins import object
-__all__ = ["TaurusMessageBox", "protectTaurusMessageBox",
-           "ProtectTaurusMessageBox", "TaurusExceptHookMessageBox"]
 
-__docformat__ = 'restructuredtext'
+from builtins import object
 
 import sys
 
 from taurus.external.qt import Qt
-
 from taurus.core.util.excepthook import BaseExceptHook
 from taurus.core.util.log import LogExceptHook
 from taurus.core.util.wrap import wraps
+
+
+__all__ = ["TaurusMessageBox", "protectTaurusMessageBox",
+           "ProtectTaurusMessageBox", "TaurusExceptHookMessageBox"]
+
+__docformat__ = 'restructuredtext'
 
 
 class TaurusMessageBox(Qt.QDialog):
@@ -340,7 +342,14 @@ def py_tg_serv_exc():
     except PyTango.DevFailed as df1:
         try:
             import traceback
-            import io
+            # ---------------------------------------------------------------
+            # workaround for unicode issues on py2 when using io instead of
+            # StringIO
+            try:
+                import StringIO as io  # py2
+            except ImportError:
+                import io  # py3
+            # ----------------------------------------------------------------
             origin = io.StringIO()
             traceback.print_stack(file=origin)
             origin.seek(0)

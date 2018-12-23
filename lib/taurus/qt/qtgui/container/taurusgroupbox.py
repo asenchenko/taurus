@@ -24,16 +24,15 @@
 #############################################################################
 
 """This module provides basic taurus group box widget"""
+
 from __future__ import absolute_import
-
-from builtins import map
-from builtins import str
-__all__ = ["TaurusGroupBox"]
-
-__docformat__ = 'restructuredtext'
 
 from taurus.external.qt import Qt
 from .taurusbasecontainer import TaurusBaseContainer
+
+__all__ = ["TaurusGroupBox"]
+
+__docformat__ = 'restructuredtext'
 
 
 class TaurusGroupBox(Qt.QGroupBox, TaurusBaseContainer):
@@ -194,7 +193,7 @@ def main():
     if len(args) == 0:
         w = demo()
     else:
-        models = list(map(str.lower, args))
+        models = map(str.lower, args)
 
         w = Qt.QWidget()
         w.setWindowTitle(app.applicationName())

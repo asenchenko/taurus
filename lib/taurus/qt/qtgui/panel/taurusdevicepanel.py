@@ -28,9 +28,7 @@ TaurusDevicePanel.py:
 """
 
 from builtins import str
-__all__ = ["TaurusDevicePanel", "TaurusDevPanel"]
-
-__docformat__ = 'restructuredtext'
+from future.utils import string_types
 
 import re
 import traceback
@@ -46,11 +44,16 @@ from taurus.core.taurusattribute import TaurusAttribute
 from taurus.core.taurusdevice import TaurusDevice
 from taurus.qt.qtgui.container import TaurusWidget, TaurusMainWindow
 from taurus.qt.qtgui.display import TaurusLabel
-from taurus.qt.qtgui.display import TaurusLed
 from taurus.qt.qtgui.panel.taurusform import TaurusForm
 from taurus.qt.qtgui.panel.taurusform import TaurusCommandsForm
 from taurus.qt.qtgui.util.ui import UILoadable
 from taurus.qt.qtgui.icon import getCachedPixmap
+
+
+__all__ = ["TaurusDevicePanel", "TaurusDevPanel"]
+
+__docformat__ = 'restructuredtext'
+
 
 ###############################################################################
 # TaurusDevicePanel (from Vacca)
@@ -75,16 +78,16 @@ def searchCl(m, k):  # TODO: Tango-centric
 
 
 def get_regexp_dict(dct, key, default=None):  # TODO: Tango-centric
-    for k, v in list(dct.items()):  # Trying regular expression match
+    for k, v in dct.items():  # Trying regular expression match
         if matchCl(k, key):
             return v
-    for k, v in list(dct.items()):  # If failed, trying if key is contained
+    for k, v in dct.items():  # If failed, trying if key is contained
         if k.lower() in key.lower():
             return v
     if default is not None:
         return default
     else:
-        raise Exception('KeyNotFound:%s' % k)
+        raise Exception('KeyNotFound:%s' % key)
 
 
 def get_eqtype(dev):  # TODO: Tango-centric
@@ -220,7 +223,7 @@ class TaurusDevicePanel(TaurusWidget):
         self._stateframe.layout().addWidget(Qt.QLabel('State'), 0, 0, Qt.Qt.AlignCenter)
         self._statelabel = TaurusLabel(self._stateframe)
         self._statelabel.setMinimumWidth(100)
-        self._statelabel.setBgRole('value')
+        self._statelabel.setBgRole('rvalue')
         self._stateframe.layout().addWidget(self._statelabel, 0, 1, Qt.Qt.AlignCenter)
 
         self._statusframe = Qt.QScrollArea(self)
@@ -274,7 +277,7 @@ class TaurusDevicePanel(TaurusWidget):
 
     def loadConfigFile(self, ifile=None):
         self.info('In TaurusDevicePanel.loadConfigFile(%s)' % ifile)
-        if isinstance(ifile, file) or isinstance(ifile, str) and not ifile.endswith('.py'):
+        if isinstance(ifile, file) or isinstance(ifile, string_types) and not ifile.endswith('.py'):
             TaurusWidget.loadConfigFile(self, ifile)
         else:
             from imp import load_source
@@ -331,7 +334,7 @@ class TaurusDevicePanel(TaurusWidget):
             font.setPointSize(15)
             self._label.setFont(font)
             if pixmap is None and self.getIconMap():
-                for k, v in list(self.getIconMap().items()):
+                for k, v in self.getIconMap().items():
                     if searchCl(k, model):
                         pixmap = v
             if pixmap is not None:

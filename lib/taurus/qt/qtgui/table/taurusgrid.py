@@ -29,34 +29,30 @@ original idea and development by gcuni
 integrated with taurus and regular expressions by srubio
 alba, 2009
 """
-from __future__ import print_function
 
 # This module needs a total cleanup. Both re. code conventions and algorithms.
 #   --cpascual 20140827
 
+from __future__ import print_function
+from future.utils import string_types
 from future import standard_library
 standard_library.install_aliases()
-from builtins import zip
-from builtins import next
 from builtins import str
-from builtins import range
+
+
 __all__ = ["TaurusGrid"]
 
 __docformat__ = 'restructuredtext'
 
 import re
-import operator
-import traceback
 from queue import Queue
-from functools import partial
 
 from taurus.external.qt import Qt, QtGui, QtCore
 
 import taurus
-from taurus.qt.qtcore.util.emitter import (modelSetter, TaurusEmitterThread,
+from taurus.qt.qtcore.util.emitter import (modelSetter,
                                            SingletonWorker, MethodModel)
 from taurus.core.taurusmanager import TaurusManager
-from taurus.core.util.log import Logger
 from taurus.qt.qtgui.base import TaurusBaseWidget
 from taurus.qt.qtgui.panel import TaurusValue
 
@@ -80,7 +76,7 @@ def get_all_models(expressions, limit=1000):
     Move this method to taurus.core.tango.search
     '''
     # print( 'In TaurusGrid.get_all_models(%s:"%s") ...' % (type(expressions),expressions))
-    if isinstance(expressions, str):
+    if isinstance(expressions, string_types):
         # if any(re.match(s,expressions) for s in ('\{.*\}','\(.*\)','\[.*\]')):
         ##self.debug( 'evaluating expressions ....')
         # expressions = list(eval(expressions))
@@ -154,7 +150,7 @@ def get_readwrite_models(expressions, limit=1000):
     For each device only the good attributes are read.
     '''
     # self.debug( 'In TaurusGrid.get_all_models(%s:"%s") ...' % (type(expressions),expressions))
-    if isinstance(expressions, str):
+    if isinstance(expressions, string_types):
         if any(re.match(s, expressions) for s in
                ('\{.*\}', '\(.*\)', '\[.*\]')):
             # self.trace( 'evaluating expressions ....')
@@ -439,7 +435,7 @@ class TaurusGrid(QtGui.QFrame, TaurusBaseWidget):
         if isinstance(model, dict):
             self.load(model)
         else:
-            model = isinstance(model, (str, QtCore.QString)) and [
+            model = isinstance(model, string_types + (QtCore.QString,)) and [
                 model] or list(model)
             self.trace('#' * 80)
             self.trace('In TaurusGrid.setModel(%s)' % str(model)[:100])
@@ -501,7 +497,7 @@ class TaurusGrid(QtGui.QFrame, TaurusBaseWidget):
                     else:
                         # print 'In setModel(): Thread already started! (%d
                         # objs in queue)'%(self.modelsThread.queue.qsize())
-                        next(self.modelsThread)
+                        self.modelsThread.next()
                 else:
                     self.trace('In setModel(): models loading delayed!')
                     pass

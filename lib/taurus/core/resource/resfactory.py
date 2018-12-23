@@ -27,20 +27,17 @@
 resfactory.py:
 """
 from __future__ import absolute_import
+from future.utils import string_types
 
 import os
 import imp
-import operator
-import types
-
-from future.utils import string_types
+import collections
 
 from taurus.core.taurushelper import Manager
 from taurus.core.util.singleton import Singleton
 from taurus.core.util.log import Logger
 from taurus.core.taurusfactory import TaurusFactory
 from taurus.core.taurusexception import TaurusException
-import collections
 
 
 class ResourcesFactory(Singleton, TaurusFactory, Logger):
@@ -93,8 +90,8 @@ class ResourcesFactory(Singleton, TaurusFactory, Logger):
         elif type(obj) in (str,) or obj is None:
             name, mod = self.__reloadResource(obj)
             obj = {}
-            for k, v in list(mod.__dict__.items()):
-                if not k.startswith('_') and isinstance(v, str):
+            for k, v in mod.__dict__.items():
+                if not k.startswith('_') and isinstance(v, string_types):
                     obj[k] = v
         else:
             raise TypeError

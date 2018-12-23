@@ -36,10 +36,8 @@
     - 'model' - will have a '...' button that will open a customized dialog for
       editing the widget model (same has 'Edit model...' task menu item
 """
-from __future__ import print_function
 
-from builtins import str
-from builtins import zip
+from __future__ import print_function
 import inspect
 
 from taurus.external.qt import Qt
@@ -88,8 +86,8 @@ class TaurusWidgetPlugin(QtDesigner.QPyDesignerCustomWidgetPlugin):
         if aspec.defaults is None:
             kwspec = {}
         else:
-            kwspec = dict(list(zip(aspec.args[-len(aspec.defaults):],
-                              aspec.defaults)))
+            kwspec = dict(zip(aspec.args[-len(aspec.defaults):],
+                              aspec.defaults))
         args, kwargs = [], {}
         if 'designMode' in kwspec:
             kwargs['designMode'] = designMode

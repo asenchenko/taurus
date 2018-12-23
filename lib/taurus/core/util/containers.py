@@ -29,16 +29,8 @@ python distribution.
 """
 from __future__ import print_function
 
-from builtins import zip
-from builtins import str
 from builtins import range
 from builtins import object
-__all__ = ["CaselessList", "CaselessDict", "CaselessWeakValueDict", "LoopList",
-           "CircBuf", "LIFO", "TimedQueue", "self_locked", "ThreadDict",
-           "defaultdict", "defaultdict_fromkey", "CaselessDefaultDict",
-           "DefaultThreadDict", "getDictAsTree", "ArrayBuffer", ]
-
-__docformat__ = "restructuredtext"
 
 from future.utils import string_types
 
@@ -46,7 +38,14 @@ import copy
 import collections
 import time
 import weakref
-import operator
+
+
+__all__ = ["CaselessList", "CaselessDict", "CaselessWeakValueDict", "LoopList",
+           "CircBuf", "LIFO", "TimedQueue", "self_locked", "ThreadDict",
+           "defaultdict", "defaultdict_fromkey", "CaselessDefaultDict",
+           "DefaultThreadDict", "getDictAsTree", "ArrayBuffer", ]
+
+__docformat__ = "restructuredtext"
 
 
 class CaselessList(list):
@@ -73,8 +72,8 @@ class CaselessList(list):
             self.append(entry)
 
     def __lowerstreq(self, a, b):
-        a = type(a) == str and a or str(a)
-        b = type(b) == str and b or str(b)
+        a = str(a)
+        b = str(b)
         return (a.lower() == b.lower())
 
     def findentry(self, item):
@@ -256,7 +255,7 @@ class CaselessDict(dict):
         if other:
             # Doesn't do keyword args
             if isinstance(other, dict):
-                for k, v in list(other.items()):
+                for k, v in other.items():
                     dict.__setitem__(self, k.lower(), v)
             else:
                 for k, v in other:
@@ -285,7 +284,7 @@ class CaselessDict(dict):
 
     def update(self, other):
         """overwritten from :meth:`dict.update`"""
-        for k, v in list(other.items()):
+        for k, v in other.items():
             dict.__setitem__(self, k.lower(), v)
 
     def fromkeys(self, iterable, value=None):
@@ -309,7 +308,7 @@ class CaselessWeakValueDict(weakref.WeakValueDictionary):
         if other:
             # Doesn't do keyword args
             if isinstance(other, dict):
-                for k, v in list(other.items()):
+                for k, v in other.items():
                     weakref.WeakValueDictionary.__setitem__(self, k.lower(), v)
             else:
                 for k, v in other:
@@ -341,7 +340,7 @@ class CaselessWeakValueDict(weakref.WeakValueDictionary):
     def update(self, other):
         """overwritten from :meth:`weakref.WeakValueDictionary.update`"""
         if other:
-            for k, v in list(other.items()):
+            for k, v in other.items():
                 weakref.WeakValueDictionary.__setitem__(self, k.lower(), v)
 
     def fromkeys(self, iterable, value=None):
@@ -920,7 +919,7 @@ class SortedDict(dict):
 
     def update(self, other):
         if hasattr(other, 'items'):
-            other = list(other.items())
+            other = other.items()
         for k, v in other:
             self.__setitem__(k, v)
 
@@ -1058,11 +1057,11 @@ def getDictAsTree(dct):
     """This method will print a recursive dict in a tree-like
        shape::
 
-           >>> print getDictAsTree({'A':{'B':[1,2],'C':[3]}})"""
+           >>> print(getDictAsTree({'A':{'B':[1,2],'C':[3]}}))"""
     def add_to_level(l, d):
         lines = []
         if isinstance(d, dict):
-            for k, v in list(d.items()):
+            for k, v in d.items():
                 print('with key "%s"' % k)
                 lines.append([''] * l + [str(k)])
                 lines += add_to_level(l + 1, v)
@@ -1136,7 +1135,7 @@ class ArrayBuffer(object):
         return self.__buffer[:self.__end].__str__()
 
     def __bool__(self):
-        return self.__buffer[:self.__end].__nonzero__()
+        return self.__buffer[:self.__end].__bool__()
 
     def __setitem__(self, i, x):
         self.__buffer[:self.__end].__setitem__(i, x)

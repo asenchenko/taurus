@@ -24,14 +24,9 @@
 #############################################################################
 
 """This module provides an arrow based widget."""
-from __future__ import division
 
 from builtins import map
 from builtins import range
-from past.utils import old_div
-__all__ = ["QWheelEdit"]
-
-__docformat__ = 'restructuredtext'
 
 import os
 import math
@@ -39,6 +34,12 @@ import numpy
 
 from taurus.external.qt import Qt
 from taurus.core.units import Q_
+
+
+__all__ = ["QWheelEdit"]
+
+__docformat__ = 'restructuredtext'
+
 
 class _ArrowButton(Qt.QPushButton):
     """Private class to be used by QWheelEdit for an arrow button"""
@@ -329,6 +330,15 @@ class QWheelEdit(Qt.QFrame):
                                 self.getDecDigitCount())
         ed.setVisible(False)
         self._editor = ed
+
+        # set the minimum height for the widget
+        # (otherwise the hints seem to be ignored by the layouts)
+        min_height = max(ed.minimumSizeHint().height(),
+                         signLabel.minimumSizeHint().height())
+        if self.getShowArrowButtons():
+            min_height += 2 * _ArrowButton.ButtonSize
+        self.setMinimumHeight(min_height)
+
         self.clearWarning()
 
     def _clear(self):
@@ -771,8 +781,8 @@ class QWheelEdit(Qt.QFrame):
         self.setFocus()
 
     def wheelEvent(self, evt):
-        numDegrees = old_div(evt.delta(), 8)
-        numSteps = old_div(numDegrees, 15)
+        numDegrees = evt.delta() // 8
+        numSteps = numDegrees // 15
         #w = Qt.QApplication.focusWidget()
         w = self.focusWidget()
         if not isinstance(w, _DigitLabel):
@@ -868,6 +878,7 @@ class QWheelEdit(Qt.QFrame):
 
 
 def main():
+    import taurus.qt.qtgui.icon  # otherwise the arrows don't show in the demo
     global arrowWidget
 
     def resetAll():

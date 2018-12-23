@@ -25,16 +25,11 @@
 
 """This module provides Qt table widgets which display logging messages from the
 python :mod:`logging` module"""
+
 from __future__ import absolute_import
 
-from past.builtins import cmp
-from builtins import map
-from builtins import str
+from operator import attrgetter
 from builtins import range
-__all__ = ["QLoggingTableModel", "QLoggingTable", "QLoggingWidget",
-           "QRemoteLoggingTableModel"]
-
-__docformat__ = 'restructuredtext'
 
 import logging
 import logging.handlers
@@ -53,6 +48,12 @@ from taurus.qt.qtgui.model import FilterToolBar
 from taurus.qt.qtgui.util import ActionFactory
 
 from .qtable import QBaseTableWidget
+
+
+__all__ = ["QLoggingTableModel", "QLoggingTable", "QLoggingWidget",
+           "QRemoteLoggingTableModel"]
+
+__docformat__ = 'restructuredtext'
 
 LEVEL, TIME, MSG, NAME, ORIGIN = list(range(5))
 HORIZ_HEADER = 'Level', 'Time', 'Message', 'By', 'Origin'
@@ -84,15 +85,6 @@ def getBrushForLevel(level):
     f, g = list(map(Qt.QBrush, __LEVEL_BRUSH[elevel]))
     return f, g
 
-
-def _origin_cmp(rec1, rec2):
-    c1 = cmp(rec1.process, rec2.process)
-    if c1 == 0:
-        c2 = cmp(rec1.thread, rec2.thread)
-        if c2 == 0:
-            return cmp(rec1.name, rec2.name)
-        return c2
-    return c1
 
 gethostname = memoized(socket.gethostname)
 
@@ -169,17 +161,13 @@ class QLoggingTableModel(Qt.QAbstractTableModel, logging.Handler):
     # ---------------------------------
 
     def sort(self, column, order=Qt.Qt.AscendingOrder):
-        if column == LEVEL:
-            f = lambda a, b: cmp(a.levelno, b.levelno)
-        elif column == TIME:
-            f = lambda a, b: cmp(a.created, b.created)
-        elif column == MSG:
-            f = lambda a, b: cmp(a.msg, b.msg)
-        elif column == NAME:
-            f = lambda a, b: cmp(a.name, b.name)
-        elif column == ORIGIN:
-            f = _origin_cmp
-        self._records = sorted(self._records, cmp=f,
+        column2key_map = {LEVEL: attrgetter('levelno'),
+                          TIME: attrgetter('created'),
+                          MSG: attrgetter('msg'),
+                          NAME: attrgetter('name'),
+                          ORIGIN: attrgetter('process', 'thread', 'name'),
+        }
+        self._records = sorted(self._records, key=column2key_map[column],
                                reverse=order == Qt.Qt.DescendingOrder)
 
     def rowCount(self, index=Qt.QModelIndex()):

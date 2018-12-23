@@ -25,18 +25,17 @@
 
 """DataExportDlg.py: A Qt dialog for showing and exporting x-y Ascii data from
 one or more curves"""
-from __future__ import print_function
 
-from builtins import zip
-from builtins import str
-from builtins import range
-__all__ = ["QDataExportDialog"]
+from __future__ import print_function
 
 import os.path
 from datetime import datetime
 
 from taurus.external.qt import Qt
 from taurus.qt.qtgui.util.ui import UILoadable
+
+
+__all__ = ["QDataExportDialog"]
 
 
 @UILoadable
@@ -155,7 +154,7 @@ class QDataExportDialog(Qt.QDialog):
             if not outputdir:
                 return False
             preffix = os.path.join(str(outputdir), "set")
-        for i, k in zip(list(range(len(self.datadict))), self.sortedNames):
+        for i, k in zip(range(len(self.datadict)), self.sortedNames):
             ofile = "%s%03i.dat" % (preffix, i + 1)
             try:
                 self.exportCurrentData(

@@ -30,18 +30,16 @@ It is not a replacement of the Tango Starter Device Server since this is much
 more limited in scope.
 """
 from __future__ import print_function
-
-from builtins import range
 from builtins import object
-__docformat__ = 'restructuredtext'
-
 
 import os
 import time
 import subprocess
 import PyTango
-
 from taurus.core.util.log import Logger
+
+
+__docformat__ = 'restructuredtext'
 
 _log = Logger('Starter')
 

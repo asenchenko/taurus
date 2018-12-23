@@ -24,9 +24,7 @@
 #############################################################################
 
 from __future__ import print_function
-from builtins import str
 import sys
-import operator
 
 import taurus.core.util
 import taurus.qt.qtgui.util
@@ -66,7 +64,7 @@ class TaurusDemoPanel(Qt.QWidget):
             group = parts[-2]
             groups.add(group)
 
-        for group in groups:
+        for group in sorted(groups):
             self.addGroup(group)
 
         for demo_name in sorted(demos):

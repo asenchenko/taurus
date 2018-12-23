@@ -29,13 +29,9 @@ taurusconfigeditor.py:
 
 from future import standard_library
 standard_library.install_aliases()
-from builtins import str
-__all__ = ["QConfigEditor"]
-
-__docformat__ = 'restructuredtext'
 
 from taurus.external.qt import Qt
-import pickle as pickle
+import pickle
 import os
 import tempfile
 from taurus.qt.qtcore.configuration import BaseConfigurableClass
@@ -43,10 +39,15 @@ from taurus.qt.qtgui.container import TaurusWidget
 import shutil
 
 
+__all__ = ["QConfigEditor"]
+
+__docformat__ = 'restructuredtext'
+
+
 class QConfigEditorModel(Qt.QStandardItemModel):
     '''A custom Model for QConfigEditor'''
 
-    showError = Qt.pyqtSignal(str, str)
+    showError = Qt.pyqtSignal('QString', 'QString')
 
     def __init__(self, parent=None, designMode=False):
         super(Qt.QStandardItemModel, self).__init__()

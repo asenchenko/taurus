@@ -24,21 +24,21 @@
 #############################################################################
 
 """This module provides the `TangoFactory` object"""
+
 from __future__ import absolute_import
-
-__all__ = ["TangoFactory"]
-
-__docformat__ = "restructuredtext"
+from future.utils import string_types
 
 try:
-    import PyTango
+    pass
 except ImportError:
+
     # note that if PyTango is not installed the factory will not be available
     from taurus.core.util.log import debug
     msg = 'cannot import PyTango module. ' + \
           'Taurus will not support the "tango" scheme'
     debug(msg)
     raise
+import PyTango
 
 from taurus import tauruscustomsettings
 from taurus.core.taurusbasetypes import (TaurusElementType,
@@ -57,6 +57,10 @@ from .tangodevice import TangoDevice
 _Authority = TangoAuthority
 _Attribute = TangoAttribute
 _Device = TangoDevice
+
+
+__all__ = ["TangoFactory"]
+__docformat__ = "restructuredtext"
 
 
 class TangoFactory(Singleton, TaurusFactory, Logger):
@@ -134,16 +138,16 @@ class TangoFactory(Singleton, TaurusFactory, Logger):
     def cleanUp(self):
         """Cleanup the singleton instance"""
         self.trace("[TangoFactory] cleanUp")
-        for k, v in list(self.tango_attrs.items()):
+        for k, v in self.tango_attrs.items():
             v.cleanUp()
-        for k, v in list(self.tango_dev_queries.items()):
+        for k, v in self.tango_dev_queries.items():
             v.cleanUp()
-        for k, v in list(self.tango_devs.items()):
+        for k, v in self.tango_devs.items():
             v.cleanUp()
         self.dft_db = None
-        for k, v in list(self.tango_db_queries.items()):
+        for k, v in self.tango_db_queries.items():
             v.cleanUp()
-        for k, v in list(self.tango_db.items()):
+        for k, v in self.tango_db.items():
             v.cleanUp()
         self.reInit()
 
@@ -448,7 +452,7 @@ class TangoFactory(Singleton, TaurusFactory, Logger):
 
            :return: (taurus.core.tango.TangoAttribute) configuration object
         """
-        if isinstance(param, str):
+        if isinstance(param, string_types):
             return self.getAttribute(param)
         return param
 

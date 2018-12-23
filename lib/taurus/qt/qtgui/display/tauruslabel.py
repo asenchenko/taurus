@@ -28,11 +28,7 @@ from __future__ import absolute_import
 
 from builtins import str
 from builtins import object
-__all__ = ["TaurusLabel"]
 
-__docformat__ = 'restructuredtext'
-
-import operator
 import collections
 import re
 
@@ -44,6 +40,11 @@ from taurus.qt.qtgui.base import TaurusBaseController
 from taurus.qt.qtgui.base import TaurusScalarAttributeControllerHelper
 from taurus.qt.qtgui.base import TaurusConfigurationControllerHelper
 from taurus.qt.qtgui.base import updateLabelBackground
+
+
+__all__ = ["TaurusLabel"]
+
+__docformat__ = 'restructuredtext'
 
 _QT_PLUGIN_INFO = {
     'module': 'taurus.qt.qtgui.display',
@@ -117,9 +118,7 @@ class TaurusLabelController(TaurusBaseController):
             return
         toolTip = label.getFormatedToolTip()
         if self._trimmedText:
-            toolTip = u"<p><b>Value:</b> %s</p><hr>%s" %\
-                      (str(self._text, errors='replace'),
-                       str(str(toolTip), errors='replace'))
+            toolTip = u"<p><b>Value:</b> %s</p><hr>%s" % (self._text, toolTip)
         label.setToolTip(toolTip)
 
     _updateBackground = updateLabelBackground
@@ -491,8 +490,15 @@ class TaurusLabel(Qt.QLabel, TaurusBaseWidget):
         else:
             value = self._permanentText
 
-        attr = self.getModelObj()
-        dev = attr.getParent()
+        dev = None
+        attr = None
+
+        modeltype = self.getModelType()
+        if modeltype == TaurusElementType.Device:
+            dev = self.getModelObj()
+        elif modeltype == TaurusElementType.Attribute:
+            attr = self.getModelObj()
+            dev = attr.getParent()
 
         try:
             v = value.format(dev=dev, attr=attr)
@@ -645,8 +651,8 @@ class TaurusLabel(Qt.QLabel, TaurusBaseWidget):
 
 def demo():
     "Label"
-    from . import demo
-    return demo.tauruslabeldemo.main()
+    from .demo import tauruslabeldemo
+    return tauruslabeldemo.main()
 
 
 def main():

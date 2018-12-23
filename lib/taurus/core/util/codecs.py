@@ -63,12 +63,7 @@ A Taurus related example::
     >>> f, d = codec.decode((v.format, v.value))
 """
 from __future__ import absolute_import
-
 from builtins import str
-__all__ = ["Codec", "NullCodec", "ZIPCodec", "BZ2Codec", "JSONCodec",
-           "FunctionCodec", "PlotCodec", "CodecPipeline", "CodecFactory"]
-
-__docformat__ = "restructuredtext"
 
 import copy
 
@@ -77,15 +72,19 @@ import struct
 import sys
 import numpy
 
-from future.utils import PY2
+from future.utils import (PY2, string_types)
 
 from .singleton import Singleton
 from .log import Logger
 from .containers import CaselessDict
 
+__all__ = ["Codec", "NullCodec", "ZIPCodec", "BZ2Codec", "JSONCodec",
+           "FunctionCodec", "PlotCodec", "CodecPipeline", "CodecFactory"]
+
+__docformat__ = "restructuredtext"
 
 if PY2:
-    buffer_types = buffer, memoryview, 
+    buffer_types = buffer, memoryview,
 else:
     buffer_types = memoryview,
 
@@ -360,7 +359,7 @@ class JSONCodec(Codec):
         return format, data
 
     def _transform_ascii(self, data):
-        if isinstance(data, str):
+        if isinstance(data, string_types):
             return data.encode('utf-8')
         elif isinstance(data, dict):
             return self._transform_dict(data)
@@ -438,7 +437,7 @@ class BSONCodec(Codec):
         return format, data
 
     def _transform_ascii(self, data):
-        if isinstance(data, str):
+        if isinstance(data, string_types):
             return data.encode('utf-8')
         elif isinstance(data, dict):
             return self._transform_dict(data)

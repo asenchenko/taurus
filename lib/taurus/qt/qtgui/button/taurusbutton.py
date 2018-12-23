@@ -29,10 +29,6 @@ from __future__ import print_function
 
 from builtins import map
 from builtins import str
-__all__ = ["TaurusLauncherButton", "TaurusCommandButton", "TaurusLockButton"]
-
-__docformat__ = 'restructuredtext'
-
 from future.utils import string_types
 
 from taurus.external.qt import Qt
@@ -41,6 +37,11 @@ from taurus.core.taurusdevice import TaurusDevice
 from taurus.qt.qtgui.base import TaurusBaseWidget
 from taurus.core.util import eventfilters
 from taurus.qt.qtgui.dialog import ProtectTaurusMessageBox
+
+
+__all__ = ["TaurusLauncherButton", "TaurusCommandButton", "TaurusLockButton"]
+
+__docformat__ = 'restructuredtext'
 
 
 class _ButtonDialog(Qt.QDialog):
@@ -444,7 +445,7 @@ class TaurusCommandButton(Qt.QPushButton, TaurusBaseWidget):
                            quotes will be removed and the quoted text will not
                            be splitted.
         '''
-        if isinstance(parameters, string_types+ (Qt.QString,)):
+        if isinstance(parameters, string_types + (Qt.QString,)):
             parameters = str(parameters).strip()
             if parameters[0] in ('"', "'") and parameters[0] == parameters[-1]:
                 parameters = [parameters[1:-1]]

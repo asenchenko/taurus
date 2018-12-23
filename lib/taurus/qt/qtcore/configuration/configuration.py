@@ -31,11 +31,11 @@ from future import standard_library
 standard_library.install_aliases()
 from builtins import str
 from builtins import object
+from future.utils import string_types
+
 __all__ = ["configurableProperty", "BaseConfigurableClass"]
 
 __docformat__ = 'restructuredtext'
-
-from future.utils import string_types
 
 
 class configurableProperty(object):
@@ -298,7 +298,7 @@ class BaseConfigurableClass(object):
 
         .. seealso:: :meth:`unregisterConfigurableItem`, :meth:`registerConfigDelegate`, :meth:`createConfig`
         '''
-        if isinstance(fget, str) or isinstance(fset, str):
+        if isinstance(fget, string_types) or isinstance(fset, string_types):
             import weakref
             obj = weakref.proxy(self)
         else:
@@ -409,7 +409,7 @@ class BaseConfigurableClass(object):
         .. seealso:: :meth:`restoreQConfig`
         '''
         from taurus.external.qt import Qt
-        import pickle as pickle
+        import pickle
         configdict = self.createConfig(allowUnpickable=False)
         return Qt.QByteArray(pickle.dumps(configdict))
 
@@ -423,7 +423,7 @@ class BaseConfigurableClass(object):
         '''
         if qstate.isNull():
             return
-        import pickle as pickle
+        import pickle
         configdict = pickle.loads(qstate.data())
         self.applyConfig(configdict)
 
@@ -434,7 +434,7 @@ class BaseConfigurableClass(object):
 
         :return: (str) file name used
         """
-        import pickle as pickle
+        import pickle
         if ofile is None:
             from taurus.external.qt import Qt
             ofile = str(Qt.QFileDialog.getSaveFileName(
@@ -455,7 +455,7 @@ class BaseConfigurableClass(object):
 
         :return: (str) file name used
         """
-        import pickle as pickle
+        import pickle
         if ifile is None:
             from taurus.external.qt import Qt
             ifile = str(Qt.QFileDialog.getOpenFileName(
@@ -464,6 +464,7 @@ class BaseConfigurableClass(object):
                 return
         if not isinstance(ifile, file):
             ifile = open(ifile, 'r')
+
         configdict = pickle.load(ifile)
         self.applyConfig(configdict)
         return ifile.name

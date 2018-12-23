@@ -23,15 +23,11 @@
 #############################################################################
 
 from __future__ import absolute_import
-from builtins import zip
-__all__ = ['EvaluationDeviceNameValidator',
-           'EvaluationAttributeNameValidator']
-
-import re
-import hashlib
-
 from future.utils import string_types
 
+from builtins import zip
+import re
+import hashlib
 import taurus
 from taurus import isValidName, debug
 from taurus.core import TaurusElementType
@@ -39,6 +35,9 @@ from taurus.core import TaurusElementType
 from taurus.core.taurusvalidator import (TaurusAttributeNameValidator,
                                          TaurusDeviceNameValidator,
                                          TaurusAuthorityNameValidator)
+
+__all__ = ['EvaluationDeviceNameValidator',
+           'EvaluationAttributeNameValidator']
 
 # Pattern for python variables
 PY_VAR = r'(?<![\.a-zA-Z0-9_])[a-zA-Z_][a-zA-Z0-9_]*'
@@ -365,7 +364,7 @@ class EvaluationAttributeNameValidator(TaurusAttributeNameValidator):
 
         # create the groups dict with unmangled refs in its values
         groups = {}
-        for n, g in list(_groups.items()):
+        for n, g in _groups.items():
             if isinstance(g, string_types):  # avoid None or boolean values
                 g = g.format(**refs_dict)
             groups[n] = g

@@ -25,10 +25,9 @@
 
 '''Utility functions to deal with non-ideal (fuzzy) tests'''
 from __future__ import print_function
-from __future__ import division
+from future.utils import string_types
 
 
-from past.utils import old_div
 def loopTest(testname, maxtries=100, maxfails=10):
     '''Run a test `maxtries` times or until it fails `maxfails` times and
     report the number of tries and failures.
@@ -104,16 +103,16 @@ def calculateTestFuzziness(test, maxtries=100, maxfails=10, **kwargs):
            "to estimate the failure rate") % (maxtries, maxfails))
     import numpy
 
-    if isinstance(test, str):
+    if isinstance(test, string_types):
         tries, fails = loopTest(test, maxtries=maxtries, maxfails=maxfails)
     else:
         tries, fails = loopSubprocess(test, maxtries=maxtries,
                                       maxfails=maxfails, **kwargs)
-    r = old_div(float(fails), tries)
-    dr = old_div(numpy.sqrt(fails), tries)
+    r = float(fails) / tries
+    dr = numpy.sqrt(fails) / tries
     print('Failure rate = %g +/- %g  (%i/%i)' % (r, dr, fails, tries))
     # calculating n using p-value=1% and failure rate with -1 sigma
-    n = numpy.ceil(old_div(numpy.log(.01), numpy.log(1 - (r - dr))))
+    n = numpy.ceil(numpy.log(.01) / numpy.log(1 - (r - dr)))
     print(('Number of consecutive times that the test should be passed ' +
            'to have a confidence>99%% that the bug is fixed: %g') % n)
     return r, dr, n

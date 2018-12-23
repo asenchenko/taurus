@@ -36,15 +36,14 @@ Modified - Tiago Coutinho
 
 from builtins import next
 from builtins import object
-__all__ = ["Properties"]
-
-__docformat__ = "restructuredtext"
 
 import sys
-import os
 import re
 import time
 
+__all__ = ["Properties"]
+
+__docformat__ = "restructuredtext"
 
 class Properties(object):
     """ A Python replacement for java.util.Properties """
@@ -71,7 +70,7 @@ class Properties(object):
 
     def __str__(self):
         s = '{'
-        for key, value in list(self._props.items()):
+        for key, value in self._props.items():
             s = ''.join((s, key, '=', value, ', '))
 
         s = ''.join((s[:-2], '}'))
